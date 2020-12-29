@@ -1,54 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>N + 1 query</title>
-    <url>/2020/12/01/N-1-query/</url>
-    <content><![CDATA[<p>當我們在rails專案裡面執行關聯性的查詢時，時常會出現N+1 query的狀況，造成效能浪費。舉個例子，在一些網站上我們常可以看到使用者(user)可以針對文章(post)有多個評論(comment)，而我們想在頁面上列出所有comment以及每個comment的user是誰時，就會出現N + 1 query：</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#user model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> &lt; ApplicationRecord</span></span><br><span class="line">	has_many <span class="symbol">:comments</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#comment model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span> &lt; ApplicationRecord</span></span><br><span class="line">	belongs_to <span class="symbol">:user</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#post model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span> &lt; ApplicationRecord</span></span><br><span class="line">	has_many <span class="symbol">:comments</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#posts_controller</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span></span></span><br><span class="line">  <span class="variable">@comment</span> = Comment.new</span><br><span class="line">  <span class="variable">@comments</span> = <span class="variable">@post</span>.comments</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#post的show頁面,列出此post所有comments，並且標示user</span></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;% <span class="variable">@comments</span>.each <span class="keyword">do</span> <span class="params">|comment|</span> %&gt;</span><br><span class="line">  &lt;li&gt;</span><br><span class="line">    [&lt;%= comment.user.nickname %&gt;]</span><br><span class="line">		&lt;%= comment.content %&gt;</span><br><span class="line">	&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;/ul</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>只要每次我們刷新show頁面時，除了撈出所有comments以外，還會針對每一個comment去跑迴圈，到資料庫撈它的user，而所謂的N指的就是這個動作。</p>
-<p><img src="/2020/12/01/N-1-query/N+1.png"></p>
-<h2 id="使用includes方法解決-eager-loading"><a href="#使用includes方法解決-eager-loading" class="headerlink" title="使用includes方法解決(eager loading)"></a>使用includes方法解決(eager loading)</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#posts_controller</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span></span></span><br><span class="line">  <span class="variable">@comment</span> = Comment.new</span><br><span class="line">  <span class="variable">@comments</span> = <span class="variable">@post</span>.comments.includes(<span class="symbol">:user</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查詢post的所有comment時，把user資料一併關聯進來，就可以先分析並一次把user資料撈出來。</span></span><br></pre></td></tr></table></figure>
-<p><img src="/2020/12/01/N-1-query/includes.png"></p>
-<p>從畫面可以看到從原本的N + 1的查詢，變成1 + 1了，而SQL語法則使用IN()取代原本一筆筆用=去取資料，一次所有相關user資料撈出來。</p>
-<p>網路上其實也有人針對rails的N + 1問題做成套件，當發生此問題就會跳出提醒，相關資訊和安裝方式可參考：<a href="https://github.com/flyerhzm/bullet">https://github.com/flyerhzm/bullet</a></p>
-]]></content>
-      <tags>
-        <tag>Ruby on Rails</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ruby on Rails 學習筆記-Block</title>
-    <url>/2020/11/30/Ruby%20on%20Rails%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Block/</url>
-    <content><![CDATA[<h2 id="Block的寫法有哪些？"><a href="#Block的寫法有哪些？" class="headerlink" title="Block的寫法有哪些？"></a>Block的寫法有哪些？</h2><ul>
-<li>do..end</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span>.times <span class="keyword">do</span> <span class="params">|i|</span></span><br><span class="line">	puts i</span><br><span class="line"><span class="keyword">end</span>	</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>花括號{ }</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span>.times &#123; <span class="params">|i|</span></span><br><span class="line">	puts i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Note: block裡面可帶參數進去，例子中是|i|，但這個i只在block裡面作用，類似JS匿名function的參數。</p>
-<h2 id="兩種寫法有何不同？"><a href="#兩種寫法有何不同？" class="headerlink" title="兩種寫法有何不同？"></a>兩種寫法有何不同？</h2><p>一般我們遇到比較可以一行搞定的，通常就會選擇花括號，而比較負責的邏輯判斷時，則使用do..end寫法，但這兩種方法還是有一些差異存在，以下舉一個簡單的例子給大家看看。</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">array = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">p array.map&#123; <span class="params">|a|</span> a * a &#125;</span><br><span class="line"></span><br><span class="line">p array.map <span class="keyword">do</span></span><br><span class="line">  <span class="params">|a|</span> a * a </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">ruby常省略小括號，原型其實是：</span><br><span class="line">p(array.map&#123; <span class="params">|a|</span> a * a &#125;) <span class="comment"># 印出 [1, 9, 25, 49]</span></span><br><span class="line"></span><br><span class="line">p(array.map) <span class="keyword">do</span> <span class="comment">#印出 &lt;Enumerator: [1, 3, 5, 7]:map&gt;</span></span><br><span class="line">  <span class="params">|a|</span> a * a </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>上面兩種結果顯示do..end這個寫法的結合力較差，在這個例子中的array.map優先跟p結合，而不是後面的block,所以後面的block無法被順利執行。</p>
-<h2 id="Block不是物件，無法獨立使用"><a href="#Block不是物件，無法獨立使用" class="headerlink" title="Block不是物件，無法獨立使用"></a>Block不是物件，無法獨立使用</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">&#123; puts <span class="string">&quot;hello&quot;</span> &#125; <span class="comment">#出現語法錯誤</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span> puts <span class="string">&quot;hello&quot;</span> <span class="keyword">end</span> <span class="comment">#語法錯誤</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用Proc、lambda將block物件化"><a href="#使用Proc、lambda將block物件化" class="headerlink" title="使用Proc、lambda將block物件化"></a>使用Proc、lambda將block物件化</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用Proc</span></span><br><span class="line">	times_five = Proc.new &#123; <span class="params">|x|</span> x * <span class="number">5</span> &#125; <span class="comment">#後面的block變成一個物件，並且可以傳參數進去</span></span><br><span class="line"></span><br><span class="line">p times_five.call(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line">p times_five. === <span class="number">3</span> <span class="comment">#印出15</span></span><br><span class="line">p times_five.(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line">p times_five[<span class="number">3</span>] <span class="comment">#印出15</span></span><br><span class="line">p times_five.<span class="keyword">yield</span>(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用lambda</span></span><br><span class="line">times_five = <span class="built_in">lambda</span> &#123;<span class="params">|x|</span> x * <span class="number">5</span>&#125; <span class="comment">#後面不需要加new方法</span></span><br><span class="line">times_five = -&gt; (x) &#123; x * <span class="number">5</span>&#125; <span class="comment">#lambda的另一種寫法</span></span><br><span class="line"></span><br><span class="line">p times_five.call(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line">p times_five. === <span class="number">3</span> <span class="comment">#印出15</span></span><br><span class="line">p times_five.(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line">p times_five[<span class="number">3</span>] <span class="comment">#印出15</span></span><br><span class="line">p times_five.<span class="keyword">yield</span>(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#兩種方式使用上的不同</span></span><br><span class="line">times_five = Proc.new &#123; <span class="params">|x|</span> x * <span class="number">5</span> &#125; <span class="comment">#執行像是block</span></span><br><span class="line">p times_five.call(<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>) <span class="comment">#正常執行，但只帶第一個引數，印出5。如果絕對值裡面有兩個參數，就可以帶兩個引數進去</span></span><br><span class="line"></span><br><span class="line">times_five = <span class="built_in">lambda</span> &#123;<span class="params">|x|</span> x * <span class="number">5</span>&#125; <span class="comment">#執行像是方法，參數和引數數量必須相同</span></span><br><span class="line">p times_five.call(<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>) <span class="comment">#wrong number of arguments (given 3, expected 1) (引數個數錯誤)</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Block是如何被執行的？"><a href="#Block是如何被執行的？" class="headerlink" title="Block是如何被執行的？"></a>Block是如何被執行的？</h2><p>可使用yield將控制權交給block執行內容</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greeting</span></span></span><br><span class="line">  puts <span class="string">&quot;hello, phil&quot;</span></span><br><span class="line">  <span class="keyword">yield</span></span><br><span class="line">  puts <span class="string">&quot;let&#x27;s go lakers&quot;</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">greeting&#123;</span><br><span class="line">  puts <span class="string">&quot;have you watched NBA final today?&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">puts <span class="string">&quot;2 more wins to go!&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#印出</span></span><br><span class="line">hello, phil</span><br><span class="line">have you watched NBA final today?</span><br><span class="line">let<span class="string">&#x27;s go lakers</span></span><br><span class="line"><span class="string">2 more wins to go!</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="應用block概念土炮手動-select"><a href="#應用block概念土炮手動-select" class="headerlink" title="應用block概念土炮手動.select"></a>應用block概念土炮手動.select</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_select</span><span class="params">(list)</span></span></span><br><span class="line">  result = [] <span class="comment">#製作空陣列</span></span><br><span class="line">	  list.each <span class="keyword">do</span> <span class="params">|n|</span> <span class="comment">#將list裡面的每個數字拋進來</span></span><br><span class="line">	   result &lt;&lt; n <span class="keyword">if</span> <span class="keyword">yield</span>(n) <span class="comment">#將數字再給回下面block執行，如果成立，丟到result的陣列裡面</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  result <span class="comment">#回傳結果</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">p my_select([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) &#123; <span class="params">|i|</span> i.odd? &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#印出[1, 3, 5]</span></span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>Ruby on Rails</tag>
-        <tag>Block</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ruby on Rails學習筆記-模組(Module)</title>
     <url>/2020/11/28/Ruby%20on%20Rails%20%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Module/</url>
     <content><![CDATA[<p>有時有多個類別都需要使用同個方法，這時候可以定義一個模組，讓每個類別可以引入取用。</p>
@@ -97,6 +49,111 @@
       <tags>
         <tag>Ruby on Rails</tag>
         <tag>Module</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>N + 1 query</title>
+    <url>/2020/12/01/N-1-query/</url>
+    <content><![CDATA[<p>當我們在rails專案裡面執行關聯性的查詢時，時常會出現N+1 query的狀況，造成效能浪費。舉個例子，在一些網站上我們常可以看到使用者(user)可以針對文章(post)有多個評論(comment)，而我們想在頁面上列出所有comment以及每個comment的user是誰時，就會出現N + 1 query：</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#user model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> &lt; ApplicationRecord</span></span><br><span class="line">	has_many <span class="symbol">:comments</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#comment model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span> &lt; ApplicationRecord</span></span><br><span class="line">	belongs_to <span class="symbol">:user</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#post model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span> &lt; ApplicationRecord</span></span><br><span class="line">	has_many <span class="symbol">:comments</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#posts_controller</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span></span></span><br><span class="line">  <span class="variable">@comment</span> = Comment.new</span><br><span class="line">  <span class="variable">@comments</span> = <span class="variable">@post</span>.comments</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#post的show頁面,列出此post所有comments，並且標示user</span></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;% <span class="variable">@comments</span>.each <span class="keyword">do</span> <span class="params">|comment|</span> %&gt;</span><br><span class="line">  &lt;li&gt;</span><br><span class="line">    [&lt;%= comment.user.nickname %&gt;]</span><br><span class="line">		&lt;%= comment.content %&gt;</span><br><span class="line">	&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;/ul</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>只要每次我們刷新show頁面時，除了撈出所有comments以外，還會針對每一個comment去跑迴圈，到資料庫撈它的user，而所謂的N指的就是這個動作。</p>
+<p><img src="/2020/12/01/N-1-query/N+1.png"></p>
+<h2 id="使用includes方法解決-eager-loading"><a href="#使用includes方法解決-eager-loading" class="headerlink" title="使用includes方法解決(eager loading)"></a>使用includes方法解決(eager loading)</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#posts_controller</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span></span></span><br><span class="line">  <span class="variable">@comment</span> = Comment.new</span><br><span class="line">  <span class="variable">@comments</span> = <span class="variable">@post</span>.comments.includes(<span class="symbol">:user</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查詢post的所有comment時，把user資料一併關聯進來，就可以先分析並一次把user資料撈出來。</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/12/01/N-1-query/includes.png"></p>
+<p>從畫面可以看到從原本的N + 1的查詢，變成1 + 1了，而SQL語法則使用IN()取代原本一筆筆用=去取資料，一次所有相關user資料撈出來。</p>
+<p>網路上其實也有人針對rails的N + 1問題做成套件，當發生此問題就會跳出提醒，相關資訊和安裝方式可參考：<a href="https://github.com/flyerhzm/bullet">https://github.com/flyerhzm/bullet</a></p>
+]]></content>
+      <tags>
+        <tag>Ruby on Rails</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ruby on Rails 學習筆記-Block</title>
+    <url>/2020/11/30/Ruby%20on%20Rails%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Block/</url>
+    <content><![CDATA[<h2 id="Block的寫法有哪些？"><a href="#Block的寫法有哪些？" class="headerlink" title="Block的寫法有哪些？"></a>Block的寫法有哪些？</h2><ul>
+<li>do..end</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span>.times <span class="keyword">do</span> <span class="params">|i|</span></span><br><span class="line">	puts i</span><br><span class="line"><span class="keyword">end</span>	</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>花括號{ }</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span>.times &#123; <span class="params">|i|</span></span><br><span class="line">	puts i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Note: block裡面可帶參數進去，例子中是|i|，但這個i只在block裡面作用，類似JS匿名function的參數。</p>
+<h2 id="兩種寫法有何不同？"><a href="#兩種寫法有何不同？" class="headerlink" title="兩種寫法有何不同？"></a>兩種寫法有何不同？</h2><p>一般我們遇到比較可以一行搞定的，通常就會選擇花括號，而比較負責的邏輯判斷時，則使用do..end寫法，但這兩種方法還是有一些差異存在，以下舉一個簡單的例子給大家看看。</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">array = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">p array.map&#123; <span class="params">|a|</span> a * a &#125;</span><br><span class="line"></span><br><span class="line">p array.map <span class="keyword">do</span></span><br><span class="line">  <span class="params">|a|</span> a * a </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">ruby常省略小括號，原型其實是：</span><br><span class="line">p(array.map&#123; <span class="params">|a|</span> a * a &#125;) <span class="comment"># 印出 [1, 9, 25, 49]</span></span><br><span class="line"></span><br><span class="line">p(array.map) <span class="keyword">do</span> <span class="comment">#印出 &lt;Enumerator: [1, 3, 5, 7]:map&gt;</span></span><br><span class="line">  <span class="params">|a|</span> a * a </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>上面兩種結果顯示do..end這個寫法的結合力較差，在這個例子中的array.map優先跟p結合，而不是後面的block,所以後面的block無法被順利執行。</p>
+<h2 id="Block不是物件，無法獨立使用"><a href="#Block不是物件，無法獨立使用" class="headerlink" title="Block不是物件，無法獨立使用"></a>Block不是物件，無法獨立使用</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">&#123; puts <span class="string">&quot;hello&quot;</span> &#125; <span class="comment">#出現語法錯誤</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span> puts <span class="string">&quot;hello&quot;</span> <span class="keyword">end</span> <span class="comment">#語法錯誤</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用Proc、lambda將block物件化"><a href="#使用Proc、lambda將block物件化" class="headerlink" title="使用Proc、lambda將block物件化"></a>使用Proc、lambda將block物件化</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用Proc</span></span><br><span class="line">	times_five = Proc.new &#123; <span class="params">|x|</span> x * <span class="number">5</span> &#125; <span class="comment">#後面的block變成一個物件，並且可以傳參數進去</span></span><br><span class="line"></span><br><span class="line">p times_five.call(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line">p times_five. === <span class="number">3</span> <span class="comment">#印出15</span></span><br><span class="line">p times_five.(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line">p times_five[<span class="number">3</span>] <span class="comment">#印出15</span></span><br><span class="line">p times_five.<span class="keyword">yield</span>(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用lambda</span></span><br><span class="line">times_five = <span class="built_in">lambda</span> &#123;<span class="params">|x|</span> x * <span class="number">5</span>&#125; <span class="comment">#後面不需要加new方法</span></span><br><span class="line">times_five = -&gt; (x) &#123; x * <span class="number">5</span>&#125; <span class="comment">#lambda的另一種寫法</span></span><br><span class="line"></span><br><span class="line">p times_five.call(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line">p times_five. === <span class="number">3</span> <span class="comment">#印出15</span></span><br><span class="line">p times_five.(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line">p times_five[<span class="number">3</span>] <span class="comment">#印出15</span></span><br><span class="line">p times_five.<span class="keyword">yield</span>(<span class="number">3</span>) <span class="comment">#印出15</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#兩種方式使用上的不同</span></span><br><span class="line">times_five = Proc.new &#123; <span class="params">|x|</span> x * <span class="number">5</span> &#125; <span class="comment">#執行像是block</span></span><br><span class="line">p times_five.call(<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>) <span class="comment">#正常執行，但只帶第一個引數，印出5。如果絕對值裡面有兩個參數，就可以帶兩個引數進去</span></span><br><span class="line"></span><br><span class="line">times_five = <span class="built_in">lambda</span> &#123;<span class="params">|x|</span> x * <span class="number">5</span>&#125; <span class="comment">#執行像是方法，參數和引數數量必須相同</span></span><br><span class="line">p times_five.call(<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>) <span class="comment">#wrong number of arguments (given 3, expected 1) (引數個數錯誤)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Block是如何被執行的？"><a href="#Block是如何被執行的？" class="headerlink" title="Block是如何被執行的？"></a>Block是如何被執行的？</h2><p>可使用yield將控制權交給block執行內容</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">greeting</span></span></span><br><span class="line">  puts <span class="string">&quot;hello, phil&quot;</span></span><br><span class="line">  <span class="keyword">yield</span></span><br><span class="line">  puts <span class="string">&quot;let&#x27;s go lakers&quot;</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">greeting&#123;</span><br><span class="line">  puts <span class="string">&quot;have you watched NBA final today?&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">puts <span class="string">&quot;2 more wins to go!&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#印出</span></span><br><span class="line">hello, phil</span><br><span class="line">have you watched NBA final today?</span><br><span class="line">let<span class="string">&#x27;s go lakers</span></span><br><span class="line"><span class="string">2 more wins to go!</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="應用block概念土炮手動-select"><a href="#應用block概念土炮手動-select" class="headerlink" title="應用block概念土炮手動.select"></a>應用block概念土炮手動.select</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_select</span><span class="params">(list)</span></span></span><br><span class="line">  result = [] <span class="comment">#製作空陣列</span></span><br><span class="line">	  list.each <span class="keyword">do</span> <span class="params">|n|</span> <span class="comment">#將list裡面的每個數字拋進來</span></span><br><span class="line">	   result &lt;&lt; n <span class="keyword">if</span> <span class="keyword">yield</span>(n) <span class="comment">#將數字再給回下面block執行，如果成立，丟到result的陣列裡面</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  result <span class="comment">#回傳結果</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">p my_select([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]) &#123; <span class="params">|i|</span> i.odd? &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#印出[1, 3, 5]</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>Block</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gem-devise-如何略過編輯user資料時，必須提供密碼的步驟？</title>
+    <url>/2020/12/22/%5Bgem%5Ddevise-%E5%A6%82%E4%BD%95%E5%9C%A8%E8%A8%BB%E5%86%8A%E5%8F%8A%E6%9B%B4%E6%96%B0user%E8%B3%87%E6%96%99%E6%99%82%E5%A6%82%E6%9E%9C%E5%A2%9E%E5%8A%A0%E6%AC%84%E4%BD%8D%EF%BC%9F%20copy/</url>
+    <content><![CDATA[<ol>
+<li><p>因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers [scope]</span><br><span class="line"><span class="comment">#這邊的scope我使用users</span></span><br></pre></td></tr></table></figure>
+
+<p> devise會幫你建立八個controller，如果不想那麼多，可以用以下指令替代</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers users -c=sessions</span><br><span class="line"><span class="comment">#只建立sessions這個controller</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>到routes.rb這邊放入這段code，告訴router使用我們建立的controller</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">devise_for <span class="symbol">:users</span>, <span class="symbol">controllers:</span> &#123; <span class="symbol">registrations:</span> <span class="string">&#x27;registrations&#x27;</span> &#125;</span><br><span class="line"><span class="comment"># 其他controller如需要也可比照辦理</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在registration.controller底下，放入這段code</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_resource</span><span class="params">(resource, params)</span></span></span><br><span class="line">    resource.update_without_password(params)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在application_controller.rb裡面，放入這段code，讓我們新建的欄位，可以被params抓到並傳送</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">configure_permitted_parameters</span></span></span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:sign_up</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:account_update</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>如此一來，就可以在不需要輸入密碼的情況下更改資料。</p>
+]]></content>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>gem</tag>
+        <tag>devise</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gem-devise-如何在註冊及更新user資料時增加欄位？</title>
+    <url>/2020/12/20/%5Bgem%5Ddevise-%E5%A6%82%E4%BD%95%E5%9C%A8%E8%A8%BB%E5%86%8A%E5%8F%8A%E6%9B%B4%E6%96%B0user%E8%B3%87%E6%96%99%E6%99%82%E5%A6%82%E6%9E%9C%E5%A2%9E%E5%8A%A0%E6%AC%84%E4%BD%8D%EF%BC%9F/</url>
+    <content><![CDATA[<p>在使用devise這個gem的時候，雖然它已經幫我們預設做了很多事情，但總是有我們需要客製化的時候，這時候我們可以透過以下步驟來達到目的：</p>
+<ol>
+<li><p>建立一個 migration，在table新增需要的欄位</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddColumnToUsers</span> &lt; ActiveRecord::Migration[6.0]</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">change</span></span></span><br><span class="line">    add_column <span class="symbol">:users</span>, <span class="symbol">:name</span>, <span class="symbol">:string</span></span><br><span class="line">    add_column <span class="symbol">:users</span>, <span class="symbol">:birthday</span>, <span class="symbol">:datetime</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>rails db:migrate</p>
+</li>
+<li><p>確認schema.rb裡面已經加入欄位</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">create_table <span class="string">&quot;users&quot;</span>, <span class="symbol">force:</span> <span class="symbol">:cascade</span> <span class="keyword">do</span> <span class="params">|t|</span></span><br><span class="line">    t.string <span class="string">&quot;email&quot;</span>, <span class="symbol">default:</span> <span class="string">&quot;&quot;</span>, <span class="symbol">null:</span> <span class="literal">false</span></span><br><span class="line">    t.string <span class="string">&quot;encrypted_password&quot;</span>, <span class="symbol">default:</span> <span class="string">&quot;&quot;</span>, <span class="symbol">null:</span> <span class="literal">false</span></span><br><span class="line">    t.string <span class="string">&quot;reset_password_token&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;reset_password_sent_at&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;remember_created_at&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;created_at&quot;</span>, <span class="symbol">precision:</span> <span class="number">6</span>, <span class="symbol">null:</span> <span class="literal">false</span></span><br><span class="line">    t.datetime <span class="string">&quot;updated_at&quot;</span>, <span class="symbol">precision:</span> <span class="number">6</span>, <span class="symbol">null:</span> <span class="literal">false</span></span><br><span class="line">    t.string <span class="string">&quot;name&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;birthday&quot;</span></span><br><span class="line">    t.string <span class="string">&quot;confirmation_token&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;confirmed_at&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;confirmation_sent_at&quot;</span></span><br><span class="line">    t.string <span class="string">&quot;unconfirmed_email&quot;</span></span><br><span class="line">    t.index [<span class="string">&quot;confirmation_token&quot;</span>], <span class="symbol">name:</span> <span class="string">&quot;index_users_on_confirmation_token&quot;</span>, <span class="symbol">unique:</span> <span class="literal">true</span></span><br><span class="line">    t.index [<span class="string">&quot;email&quot;</span>], <span class="symbol">name:</span> <span class="string">&quot;index_users_on_email&quot;</span>, <span class="symbol">unique:</span> <span class="literal">true</span></span><br><span class="line">    t.index [<span class="string">&quot;reset_password_token&quot;</span>], <span class="symbol">name:</span> <span class="string">&quot;index_users_on_reset_password_token&quot;</span>, <span class="symbol">unique:</span> <span class="literal">true</span></span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>參考devise官網的指示，讓新欄位的parameters允許通過<a href="https://github.com/heartcombo/devise#strong-parameters">https://github.com/heartcombo/devise#strong-parameters</a></p>
+</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">def configure_permitted_parameters</span><br><span class="line">    devise_parameter_sanitizer.permit(:sign_up, <span class="attr">keys</span>: [:name])</span><br><span class="line">    devise_parameter_sanitizer.permit(:account_update, <span class="attr">keys</span>: [:name])</span><br><span class="line"> end</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>最後回到頁面將新增欄位show出來</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>gem</tag>
+        <tag>devise</tag>
       </tags>
   </entry>
   <entry>
@@ -155,63 +212,6 @@
       <tags>
         <tag>Ruby on Rails</tag>
         <tag>Symbol</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>gem-devise-如何在註冊及更新user資料時增加欄位？</title>
-    <url>/2020/12/20/%5Bgem%5Ddevise-%E5%A6%82%E4%BD%95%E5%9C%A8%E8%A8%BB%E5%86%8A%E5%8F%8A%E6%9B%B4%E6%96%B0user%E8%B3%87%E6%96%99%E6%99%82%E5%A6%82%E6%9E%9C%E5%A2%9E%E5%8A%A0%E6%AC%84%E4%BD%8D%EF%BC%9F/</url>
-    <content><![CDATA[<p>在使用devise這個gem的時候，雖然它已經幫我們預設做了很多事情，但總是有我們需要客製化的時候，這時候我們可以透過以下步驟來達到目的：</p>
-<ol>
-<li><p>建立一個 migration，在table新增需要的欄位</p>
- <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddColumnToUsers</span> &lt; ActiveRecord::Migration[6.0]</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">change</span></span></span><br><span class="line">    add_column <span class="symbol">:users</span>, <span class="symbol">:name</span>, <span class="symbol">:string</span></span><br><span class="line">    add_column <span class="symbol">:users</span>, <span class="symbol">:birthday</span>, <span class="symbol">:datetime</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>rails db:migrate</p>
-</li>
-<li><p>確認schema.rb裡面已經加入欄位</p>
- <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">create_table <span class="string">&quot;users&quot;</span>, <span class="symbol">force:</span> <span class="symbol">:cascade</span> <span class="keyword">do</span> <span class="params">|t|</span></span><br><span class="line">    t.string <span class="string">&quot;email&quot;</span>, <span class="symbol">default:</span> <span class="string">&quot;&quot;</span>, <span class="symbol">null:</span> <span class="literal">false</span></span><br><span class="line">    t.string <span class="string">&quot;encrypted_password&quot;</span>, <span class="symbol">default:</span> <span class="string">&quot;&quot;</span>, <span class="symbol">null:</span> <span class="literal">false</span></span><br><span class="line">    t.string <span class="string">&quot;reset_password_token&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;reset_password_sent_at&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;remember_created_at&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;created_at&quot;</span>, <span class="symbol">precision:</span> <span class="number">6</span>, <span class="symbol">null:</span> <span class="literal">false</span></span><br><span class="line">    t.datetime <span class="string">&quot;updated_at&quot;</span>, <span class="symbol">precision:</span> <span class="number">6</span>, <span class="symbol">null:</span> <span class="literal">false</span></span><br><span class="line">    t.string <span class="string">&quot;name&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;birthday&quot;</span></span><br><span class="line">    t.string <span class="string">&quot;confirmation_token&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;confirmed_at&quot;</span></span><br><span class="line">    t.datetime <span class="string">&quot;confirmation_sent_at&quot;</span></span><br><span class="line">    t.string <span class="string">&quot;unconfirmed_email&quot;</span></span><br><span class="line">    t.index [<span class="string">&quot;confirmation_token&quot;</span>], <span class="symbol">name:</span> <span class="string">&quot;index_users_on_confirmation_token&quot;</span>, <span class="symbol">unique:</span> <span class="literal">true</span></span><br><span class="line">    t.index [<span class="string">&quot;email&quot;</span>], <span class="symbol">name:</span> <span class="string">&quot;index_users_on_email&quot;</span>, <span class="symbol">unique:</span> <span class="literal">true</span></span><br><span class="line">    t.index [<span class="string">&quot;reset_password_token&quot;</span>], <span class="symbol">name:</span> <span class="string">&quot;index_users_on_reset_password_token&quot;</span>, <span class="symbol">unique:</span> <span class="literal">true</span></span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>參考devise官網的指示，讓新欄位的parameters允許通過<a href="https://github.com/heartcombo/devise#strong-parameters">https://github.com/heartcombo/devise#strong-parameters</a></p>
-</li>
-</ol>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">def configure_permitted_parameters</span><br><span class="line">    devise_parameter_sanitizer.permit(:sign_up, <span class="attr">keys</span>: [:name])</span><br><span class="line">    devise_parameter_sanitizer.permit(:account_update, <span class="attr">keys</span>: [:name])</span><br><span class="line"> end</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>最後回到頁面將新增欄位show出來</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Ruby on Rails</tag>
-        <tag>gem</tag>
-        <tag>devise</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>gem-devise-如何略過編輯user資料時，必須提供密碼的步驟？</title>
-    <url>/2020/12/22/%5Bgem%5Ddevise-%E5%A6%82%E4%BD%95%E5%9C%A8%E8%A8%BB%E5%86%8A%E5%8F%8A%E6%9B%B4%E6%96%B0user%E8%B3%87%E6%96%99%E6%99%82%E5%A6%82%E6%9E%9C%E5%A2%9E%E5%8A%A0%E6%AC%84%E4%BD%8D%EF%BC%9F%20copy/</url>
-    <content><![CDATA[<ol>
-<li><p>因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。</p>
- <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers [scope]</span><br><span class="line"><span class="comment">#這邊的scope我使用users</span></span><br></pre></td></tr></table></figure>
-
-<p> devise會幫你建立八個controller，如果不想那麼多，可以用以下指令替代</p>
- <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers users -c=sessions</span><br><span class="line"><span class="comment">#只建立sessions這個controller</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>到routes.rb這邊放入這段code，告訴router使用我們建立的controller</p>
- <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">devise_for <span class="symbol">:users</span>, <span class="symbol">controllers:</span> &#123; <span class="symbol">registrations:</span> <span class="string">&#x27;registrations&#x27;</span> &#125;</span><br><span class="line"><span class="comment"># 其他controller如需要也可比照辦理</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在registration.controller底下，放入這段code</p>
- <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_resource</span><span class="params">(resource, params)</span></span></span><br><span class="line">    resource.update_without_password(params)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在application_controller.rb裡面，放入這段code，讓我們新建的欄位，可以被params抓到並傳送</p>
- <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">configure_permitted_parameters</span></span></span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:sign_up</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:account_update</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>如此一來，就可以在不需要輸入密碼的情況下更改資料。</p>
-]]></content>
-      <tags>
-        <tag>Ruby on Rails</tag>
-        <tag>gem</tag>
-        <tag>devise</tag>
       </tags>
   </entry>
 </search>
