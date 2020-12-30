@@ -184,7 +184,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://phillee.cc/2020/12/29/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day1/">
+    <link itemprop="mainEntityOfPage" href="http://phillee.cc/2020/12/30/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -198,7 +198,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/12/29/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day1/" class="post-title-link" itemprop="url">挑戰連續刷題30天-day1</a>
+            <a href="/2020/12/30/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day1/" class="post-title-link" itemprop="url">挑戰連續刷題30天-day1</a>
         </h2>
 
         <div class="post-meta">
@@ -209,7 +209,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-12-29 22:35:06 / Modified: 22:35:50" itemprop="dateCreated datePublished" datetime="2020-12-29T22:35:06+08:00">2020-12-29</time>
+              <time title="Created: 2020-12-30 22:35:06 / Modified: 23:12:50" itemprop="dateCreated datePublished" datetime="2020-12-30T22:35:06+08:00">2020-12-30</time>
             </span>
 
           
@@ -223,7 +223,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <p>雖然今年沒能搭上鐵人賽的列車，但還是想給過去惰性滿滿的自己一些挑戰，從今天開始連續刷30天的codewar！！</p>
+<h3 id="題目說明：取最大值與最小值"><a href="#題目說明：取最大值與最小值" class="headerlink" title="題目說明：取最大值與最小值"></a>題目說明：取最大值與最小值</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Test.assert_equals(high_and_low(<span class="string">&quot;4 5 29 54 4 0 -214 542 -64 1 -3 6 -6&quot;</span>), <span class="string">&quot;542 -214&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="起始內容："><a href="#起始內容：" class="headerlink" title="起始內容："></a>起始內容：</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>解題步驟：</p>
+<p>1.把字串裡的每個字用split分開，並且得到新的陣列</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line"></span><br><span class="line">	numbers.split</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;[<span class="string">&quot;4&quot;</span>, <span class="string">&quot;5&quot;</span>, <span class="string">&quot;29&quot;</span>, <span class="string">&quot;54&quot;</span>, <span class="string">&quot;4&quot;</span>, <span class="string">&quot;0&quot;</span>, <span class="string">&quot;-214&quot;</span>, <span class="string">&quot;542&quot;</span>, <span class="string">&quot;-64&quot;</span>, <span class="string">&quot;1&quot;</span>, <span class="string">&quot;-3&quot;</span>, <span class="string">&quot;6&quot;</span>, <span class="string">&quot;-6&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>2.用map對陣列每個元素做轉換成數字</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line"></span><br><span class="line">	numbers.split.map&#123;<span class="params">|x|</span> x.to_i&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;[<span class="number">4</span>, <span class="number">5</span>, <span class="number">29</span>, <span class="number">54</span>, <span class="number">4</span>, <span class="number">0</span>, -<span class="number">214</span>, <span class="number">542</span>, -<span class="number">64</span>, <span class="number">1</span>, -<span class="number">3</span>, <span class="number">6</span>, -<span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+
+<p>3.用minmax取最小及最大值，再reverse把最大值放前面</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line"></span><br><span class="line">	numbers.split.map&#123;<span class="params">|x|</span> x.to_i&#125;.minmax.reverse</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;[<span class="number">542</span>, -<span class="number">214</span>]</span><br></pre></td></tr></table></figure>
+
+<p>4.最後join把陣列變回字串，並且在中間加上空格</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line"></span><br><span class="line">	numbers.split.map&#123;<span class="params">|x|</span> x.to_i&#125;.minmax.reverse.join(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;<span class="string">&quot;542 -214&quot;</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -1000,11 +1017,16 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/prodigy7748" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;prodigy7748" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
