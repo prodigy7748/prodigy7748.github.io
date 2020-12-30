@@ -240,7 +240,7 @@
 </li>
 </ol>
 <p>這時候填完資料按下送出，應該就可以看到兩個model的資料同時寫入資料庫了。</p>
-<p><img src="/Untitled.png"></p>
+<p>![](截圖 2020-12-28 下午10.54.25.png)</p>
 <p>備註：在第四個步驟中，我們只能建立一個giveback的實體，如果需要要建立多個實體及資料，可使用times的方法。</p>
 <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new</span></span></span><br><span class="line">    <span class="variable">@project</span> = Project.new</span><br><span class="line">    <span class="number">5</span>.times &#123;<span class="variable">@project</span>.givebacks.build&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
