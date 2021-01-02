@@ -293,5 +293,28 @@
 
 <h3 id="解題說明"><a href="#解題說明" class="headerlink" title="解題說明:"></a>解題說明:</h3><p>用map對陣列內每個元素做判斷，如果是基數，就乘以0.5次方；如果是偶數，就乘以2次方。最後sum加總再用round取小數點兩位</p>
 <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum_square_even_root_odd</span><span class="params">(nums)</span></span></span><br><span class="line"></span><br><span class="line">	nums.map&#123; <span class="params">|x|</span> x.odd? ? x ** <span class="number">0.5</span> : x ** <span class="number">2</span> &#125;.sum.round(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>Codewar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>挑戰連續刷題30天-day3</title>
+    <url>/2021/01/01/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day3/</url>
+    <content><![CDATA[<h3 id="取一段字串中間的文字"><a href="#取一段字串中間的文字" class="headerlink" title="取一段字串中間的文字"></a>取一段字串中間的文字</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kata.getMiddle(&quot;test&quot;) should return &quot;es&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;testing&quot;) should return &quot;t&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;middle&quot;) should return &quot;dd&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;A&quot;) should return &quot;A&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值"><a href="#解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值" class="headerlink" title="解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值"></a>解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值</h3><p>1.如果是單數，就將字串長度除以2再四捨五入，取到中間數</p>
+<p>2.如果是偶數，將字串長度除以2再減掉1，加上字串長度除以2</p>
+<p>3.雖然方法笨笨的，但有效XD</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_middle</span><span class="params">(s)</span></span></span><br><span class="line">  arr = s.split(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  <span class="keyword">if</span> arr.length.odd?</span><br><span class="line">    arr[((arr.length) / <span class="number">2</span>).round]</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    arr[(arr.length) / <span class="number">2</span> - <span class="number">1</span>] + arr[(arr.length) / <span class="number">2</span> ]</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>解題完之後看到很聰明的作法，一行就搞定！在這裡也跟大家分享～</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_middle</span><span class="params">(s)</span></span></span><br><span class="line">  s[(s.size-<span class="number">1</span>)/<span class="number">2</span>..s.size/<span class="number">2</span>]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>Codewar</tag>
+      </tags>
   </entry>
 </search>
