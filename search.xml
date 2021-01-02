@@ -317,4 +317,33 @@
         <tag>Codewar</tag>
       </tags>
   </entry>
+  <entry>
+    <title>挑戰連續刷codewar30天-day4</title>
+    <url>/2021/01/02/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day4/</url>
+    <content><![CDATA[<h3 id="說明：這次沒有說明，就是按照以下邏輯去完成題目。"><a href="#說明：這次沒有說明，就是按照以下邏輯去完成題目。" class="headerlink" title="說明：這次沒有說明，就是按照以下邏輯去完成題目。"></a>說明：這次沒有說明，就是按照以下邏輯去完成題目。</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">accum(&quot;abcd&quot;) -&gt; &quot;A-Bb-Ccc-Dddd&quot;</span><br><span class="line">accum(&quot;RqaEzty&quot;) -&gt; &quot;R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy&quot;</span><br><span class="line">accum(&quot;cwAt&quot;) -&gt; &quot;C-Ww-Aaa-Tttt&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="題目："><a href="#題目：" class="headerlink" title="題目："></a>題目：</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Test.describe(<span class="string">&quot;accum&quot;</span>) <span class="keyword">do</span></span><br><span class="line">    Test.it(<span class="string">&quot;Basic tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">    	  Test.assert_equals(accum(<span class="string">&quot;ZpglnRxqenU&quot;</span>), <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;NyffsGeyylB&quot;</span>), <span class="string">&quot;N-Yy-Fff-Ffff-Sssss-Gggggg-Eeeeeee-Yyyyyyyy-Yyyyyyyyy-Llllllllll-Bbbbbbbbbbb&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;MjtkuBovqrU&quot;</span>), <span class="string">&quot;M-Jj-Ttt-Kkkk-Uuuuu-Bbbbbb-Ooooooo-Vvvvvvvv-Qqqqqqqqq-Rrrrrrrrrr-Uuuuuuuuuuu&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;EvidjUnokmM&quot;</span>), <span class="string">&quot;E-Vv-Iii-Dddd-Jjjjj-Uuuuuu-Nnnnnnn-Oooooooo-Kkkkkkkkk-Mmmmmmmmmm-Mmmmmmmmmmm&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;HbideVbxncC&quot;</span>), <span class="string">&quot;H-Bb-Iii-Dddd-Eeeee-Vvvvvv-Bbbbbbb-Xxxxxxxx-Nnnnnnnnn-Cccccccccc-Ccccccccccc&quot;</span>)</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="解題："><a href="#解題：" class="headerlink" title="解題："></a>解題：</h3><ol>
+<li><p>先將題目的字串全部統一換成小寫</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> <span class="string">&quot;zpglnrxqenu&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用chars把每個字拆開，同時變成一個陣列</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;z&quot;</span>, <span class="string">&quot;p&quot;</span>, <span class="string">&quot;g&quot;</span>, <span class="string">&quot;l&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;r&quot;</span>, <span class="string">&quot;x&quot;</span>, <span class="string">&quot;q&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;u&quot;</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用map.with_index方法對陣列每一個字元做事情，這邊用with_index可以抓到每個字元的索引值，然後讓他們倍數複製</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;z&quot;</span>, <span class="string">&quot;pp&quot;</span>, <span class="string">&quot;ggg&quot;</span>, <span class="string">&quot;llll&quot;</span>, <span class="string">&quot;nnnnn&quot;</span>, <span class="string">&quot;rrrrrr&quot;</span>, <span class="string">&quot;xxxxxxx&quot;</span>, <span class="string">&quot;qqqqqqqq&quot;</span>, <span class="string">&quot;eeeeeeeee&quot;</span>, <span class="string">&quot;nnnnnnnnnn&quot;</span>, <span class="string">&quot;uuuuuuuuuuu&quot;</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用capitalize讓每個元素的首字大寫</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;Z&quot;</span>, <span class="string">&quot;Pp&quot;</span>, <span class="string">&quot;Ggg&quot;</span>, <span class="string">&quot;Llll&quot;</span>, <span class="string">&quot;Nnnnn&quot;</span>, <span class="string">&quot;Rrrrrr&quot;</span>, <span class="string">&quot;Xxxxxxx&quot;</span>, <span class="string">&quot;Qqqqqqqq&quot;</span>, <span class="string">&quot;Eeeeeeeee&quot;</span>, <span class="string">&quot;Nnnnnnnnnn&quot;</span>, <span class="string">&quot;Uuuuuuuuuuu&quot;</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最後用join(‘-‘)把所有元素用’-‘符號穿在一起變成字串，得到最後結果</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">accum</span><span class="params">(s)</span></span></span><br><span class="line">	s.downcase.chars.map.with_index &#123;<span class="params">|x, index|</span> (x * (index + <span class="number">1</span>)).capitalize&#125;.join(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>Codewar</tag>
+      </tags>
+  </entry>
 </search>
