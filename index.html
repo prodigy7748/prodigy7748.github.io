@@ -184,6 +184,73 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://phillee.cc/2020/12/31/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/31/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day2/" class="post-title-link" itemprop="url">挑戰連續刷題30天-day2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-31 23:08:19" itemprop="dateCreated datePublished" datetime="2020-12-31T23:08:19+08:00">2020-12-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-02 23:09:41" itemprop="dateModified" datetime="2021-01-02T23:09:41+08:00">2021-01-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。"><a href="#題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。" class="headerlink" title="題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。"></a>題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。</h3><h3 id="結果："><a href="#結果：" class="headerlink" title="結果："></a>結果：</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Test.assert_equals(sum_square_even_root_odd([<span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>]), <span class="number">91.61</span>)</span><br><span class="line"></span><br><span class="line">Test.assert_equals(sum_square_even_root_odd([<span class="number">1</span>, <span class="number">14</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">17</span>, <span class="number">21</span>]), <span class="number">272.71</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="解題說明"><a href="#解題說明" class="headerlink" title="解題說明:"></a>解題說明:</h3><p>用map對陣列內每個元素做判斷，如果是基數，就乘以0.5次方；如果是偶數，就乘以2次方。最後sum加總再用round取小數點兩位</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum_square_even_root_odd</span><span class="params">(nums)</span></span></span><br><span class="line"></span><br><span class="line">	nums.map&#123; <span class="params">|x|</span> x.odd? ? x ** <span class="number">0.5</span> : x ** <span class="number">2</span> &#125;.sum.round(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://phillee.cc/2020/12/30/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1016,7 +1083,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1055,7 +1122,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fas fa-baby"></i>
   </span>
