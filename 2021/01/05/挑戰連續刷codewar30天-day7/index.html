@@ -21,22 +21,21 @@
     var CONFIG = {"hostname":"localhost","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。  12$ rails generate devise:controllers [scope]#這邊的scope我使用users   devise會幫你建立八個controller，如果不想那麼多，">
+  <meta name="description" content="題目：找到陣列中只有一個的數字Example:12[1, 1, 2] &#x3D;&#x3D;&gt; 2[17, 17, 3, 17, 17, 17, 17] &#x3D;&#x3D;&gt; 3 解題方向：看到要對陣列裡的元素做事情時，都會先想到each, map, select這幾個api，這邊可以用each搭配count去算每個元素的數量，如果等於1代表只有一個，就回傳這個值。 123def stray (numbers)  n">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gem-devise-如何略過編輯user資料時，必須提供密碼的步驟？">
-<meta property="og:url" content="http://localhost:4000/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/index.html">
+<meta property="og:title" content="挑戰連續刷codewar30天-day7">
+<meta property="og:url" content="http://localhost:4000/2021/01/05/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day7/index.html">
 <meta property="og:site_name" content="Phil&#39;s blog">
-<meta property="og:description" content="因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。  12$ rails generate devise:controllers [scope]#這邊的scope我使用users   devise會幫你建立八個controller，如果不想那麼多，">
+<meta property="og:description" content="題目：找到陣列中只有一個的數字Example:12[1, 1, 2] &#x3D;&#x3D;&gt; 2[17, 17, 3, 17, 17, 17, 17] &#x3D;&#x3D;&gt; 3 解題方向：看到要對陣列裡的元素做事情時，都會先想到each, map, select這幾個api，這邊可以用each搭配count去算每個元素的數量，如果等於1代表只有一個，就回傳這個值。 123def stray (numbers)  n">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2020-12-22T14:22:32.000Z">
-<meta property="article:modified_time" content="2020-12-30T15:34:20.862Z">
+<meta property="article:published_time" content="2021-01-05T15:02:55.000Z">
+<meta property="article:modified_time" content="2021-01-05T15:03:04.673Z">
 <meta property="article:author" content="Phil lee">
 <meta property="article:tag" content="Ruby on Rails">
-<meta property="article:tag" content="Gem">
-<meta property="article:tag" content="Devise">
+<meta property="article:tag" content="Codewar">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://localhost:4000/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/">
+<link rel="canonical" href="http://localhost:4000/2021/01/05/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day7/">
 
 
 <script id="page-configurations">
@@ -49,7 +48,7 @@
   };
 </script>
 
-  <title>gem-devise-如何略過編輯user資料時，必須提供密碼的步驟？ | Phil's blog</title>
+  <title>挑戰連續刷codewar30天-day7 | Phil's blog</title>
   
 
 
@@ -192,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2021/01/05/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -205,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          gem-devise-如何略過編輯user資料時，必須提供密碼的步驟？
+          挑戰連續刷codewar30天-day7
         </h1>
 
         <div class="post-meta">
@@ -214,16 +213,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-12-22 22:22:32" itemprop="dateCreated datePublished" datetime="2020-12-22T22:22:32+08:00">2020-12-22</time>
+              <time title="Created: 2021-01-05 23:02:55 / Modified: 23:03:04" itemprop="dateCreated datePublished" datetime="2021-01-05T23:02:55+08:00">2021-01-05</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-30 23:34:20" itemprop="dateModified" datetime="2020-12-30T23:34:20+08:00">2020-12-30</time>
-              </span>
 
           
 
@@ -236,26 +229,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ol>
-<li><p>因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers [scope]</span><br><span class="line"><span class="comment">#這邊的scope我使用users</span></span><br></pre></td></tr></table></figure>
-
-<p> devise會幫你建立八個controller，如果不想那麼多，可以用以下指令替代</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers users -c=sessions</span><br><span class="line"><span class="comment">#只建立sessions這個controller</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>到routes.rb這邊放入這段code，告訴router使用我們建立的controller</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">devise_for <span class="symbol">:users</span>, <span class="symbol">controllers:</span> &#123; <span class="symbol">registrations:</span> <span class="string">&#x27;registrations&#x27;</span> &#125;</span><br><span class="line"><span class="comment"># 其他controller如需要也可比照辦理</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在registration.controller底下，放入這段code</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_resource</span><span class="params">(resource, params)</span></span></span><br><span class="line">    resource.update_without_password(params)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在application_controller.rb裡面，放入這段code，讓我們新建的欄位，可以被params抓到並傳送</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">configure_permitted_parameters</span></span></span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:sign_up</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:account_update</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>如此一來，就可以在不需要輸入密碼的情況下更改資料。</p>
-
+        <h3 id="題目：找到陣列中只有一個的數字"><a href="#題目：找到陣列中只有一個的數字" class="headerlink" title="題目：找到陣列中只有一個的數字"></a>題目：找到陣列中只有一個的數字</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>] ==&gt; <span class="number">2</span></span><br><span class="line">[<span class="number">17</span>, <span class="number">17</span>, <span class="number">3</span>, <span class="number">17</span>, <span class="number">17</span>, <span class="number">17</span>, <span class="number">17</span>] ==&gt; <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><p>看到要對陣列裡的元素做事情時，都會先想到each, map, select這幾個api，這邊可以用each搭配count去算每個元素的數量，如果等於1代表只有一個，就回傳這個值。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stray</span> <span class="params">(numbers)</span></span></span><br><span class="line">  numbers.each &#123; <span class="params">|x|</span> <span class="keyword">return</span> x <span class="keyword">if</span> numbers.count(x) == <span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -265,8 +241,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Ruby-on-Rails/" rel="tag"># Ruby on Rails</a>
-              <a href="/tags/Gem/" rel="tag"># Gem</a>
-              <a href="/tags/Devise/" rel="tag"># Devise</a>
+              <a href="/tags/Codewar/" rel="tag"># Codewar</a>
           </div>
 
         
@@ -275,13 +250,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/12/20/gem-devise-%E5%A6%82%E4%BD%95%E5%9C%A8%E8%A8%BB%E5%86%8A%E5%8F%8A%E6%9B%B4%E6%96%B0user%E8%B3%87%E6%96%99%E6%99%82%E5%A6%82%E6%9E%9C%E5%A2%9E%E5%8A%A0%E6%AC%84%E4%BD%8D%EF%BC%9F/" rel="prev" title="gem-devise-如何在註冊及更新user資料時增加欄位？">
-      <i class="fa fa-chevron-left"></i> gem-devise-如何在註冊及更新user資料時增加欄位？
+    <a href="/2021/01/04/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day6/" rel="prev" title="挑戰連續刷codewar30天-day6">
+      <i class="fa fa-chevron-left"></i> 挑戰連續刷codewar30天-day6
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/12/28/%E5%A6%82%E4%BD%95%E5%9C%A8%E4%B8%80%E5%80%8Bform%E8%A3%A1%E9%9D%A2%E5%AF%AB%E5%85%A5%E5%85%A9%E5%80%8Bmodel%E7%9A%84%E6%AC%84%E4%BD%8D%EF%BC%9F%E5%A6%82%E4%BD%95%E5%88%AA%E9%99%A4%EF%BC%9F/" rel="next" title="如何在一個form裡面寫入兩個model的欄位？如何刪除？">
-      如何在一個form裡面寫入兩個model的欄位？如何刪除？ <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -340,6 +312,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE%EF%BC%9A%E6%89%BE%E5%88%B0%E9%99%A3%E5%88%97%E4%B8%AD%E5%8F%AA%E6%9C%89%E4%B8%80%E5%80%8B%E7%9A%84%E6%95%B8%E5%AD%97"><span class="nav-number">1.</span> <span class="nav-text">題目：找到陣列中只有一個的數字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example"><span class="nav-number">2.</span> <span class="nav-text">Example:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E6%96%B9%E5%90%91%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">解題方向：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
