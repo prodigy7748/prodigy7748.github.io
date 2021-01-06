@@ -18,25 +18,25 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"localhost","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"phillee.cc","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。  12$ rails generate devise:controllers [scope]#這邊的scope我使用users   devise會幫你建立八個controller，如果不想那麼多，">
+  <meta name="description" content="因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。  12$ rails generate devise:controllers [scope]#這邊的scope我使用users  devise會幫你建立八個controller，如果不想那麼多，可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gem-devise-如何略過編輯user資料時，必須提供密碼的步驟？">
-<meta property="og:url" content="http://localhost:4000/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/index.html">
+<meta property="og:url" content="https://phillee.cc/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Phil&#39;s blog">
-<meta property="og:description" content="因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。  12$ rails generate devise:controllers [scope]#這邊的scope我使用users   devise會幫你建立八個controller，如果不想那麼多，">
+<meta property="og:description" content="因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。  12$ rails generate devise:controllers [scope]#這邊的scope我使用users  devise會幫你建立八個controller，如果不想那麼多，可">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-12-22T14:22:32.000Z">
-<meta property="article:modified_time" content="2020-12-30T15:34:20.862Z">
+<meta property="article:modified_time" content="2021-01-05T14:08:43.531Z">
 <meta property="article:author" content="Phil lee">
 <meta property="article:tag" content="Ruby on Rails">
 <meta property="article:tag" content="Gem">
 <meta property="article:tag" content="Devise">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://localhost:4000/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/">
+<link rel="canonical" href="https://phillee.cc/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/">
 
 
 <script id="page-configurations">
@@ -192,7 +192,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-30 23:34:20" itemprop="dateModified" datetime="2020-12-30T23:34:20+08:00">2020-12-30</time>
+                <time title="Modified: 2021-01-05 22:08:43" itemprop="dateModified" datetime="2021-01-05T22:08:43+08:00">2021-01-05</time>
               </span>
 
           
@@ -239,22 +239,17 @@
         <ol>
 <li><p>因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。</p>
  <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers [scope]</span><br><span class="line"><span class="comment">#這邊的scope我使用users</span></span><br></pre></td></tr></table></figure>
-
 <p> devise會幫你建立八個controller，如果不想那麼多，可以用以下指令替代</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers users -c=sessions</span><br><span class="line"><span class="comment">#只建立sessions這個controller</span></span><br></pre></td></tr></table></figure>
-</li>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers users -c=sessions</span><br><span class="line"><span class="comment">#只建立sessions這個controller</span></span><br></pre></td></tr></table></figure></li>
 <li><p>到routes.rb這邊放入這段code，告訴router使用我們建立的controller</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">devise_for <span class="symbol">:users</span>, <span class="symbol">controllers:</span> &#123; <span class="symbol">registrations:</span> <span class="string">&#x27;registrations&#x27;</span> &#125;</span><br><span class="line"><span class="comment"># 其他controller如需要也可比照辦理</span></span><br></pre></td></tr></table></figure>
-</li>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">devise_for <span class="symbol">:users</span>, <span class="symbol">controllers:</span> &#123; <span class="symbol">registrations:</span> <span class="string">&#x27;registrations&#x27;</span> &#125;</span><br><span class="line"><span class="comment"># 其他controller如需要也可比照辦理</span></span><br></pre></td></tr></table></figure></li>
 <li><p>在registration.controller底下，放入這段code</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_resource</span><span class="params">(resource, params)</span></span></span><br><span class="line">    resource.update_without_password(params)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-</li>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_resource</span><span class="params">(resource, params)</span></span></span><br><span class="line">    resource.update_without_password(params)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
 <li><p>在application_controller.rb裡面，放入這段code，讓我們新建的欄位，可以被params抓到並傳送</p>
  <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">configure_permitted_parameters</span></span></span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:sign_up</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:account_update</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
+<p>如此一來，就可以在不需要輸入密碼的情況下更改資料。</p>
 </li>
 </ol>
-<p>如此一來，就可以在不需要輸入密碼的情況下更改資料。</p>
 
     </div>
 

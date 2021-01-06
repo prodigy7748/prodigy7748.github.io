@@ -18,13 +18,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"localhost","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"phillee.cc","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。 123456789def test(actual, expected)  Test.assert_equals(actual, expected)endTest.describe(&quot;example tests&quot;) do  test(solution(10), 23)  test">
 <meta property="og:type" content="article">
 <meta property="og:title" content="挑戰連續刷codewar30天-day5">
-<meta property="og:url" content="http://localhost:4000/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/index.html">
+<meta property="og:url" content="https://phillee.cc/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/index.html">
 <meta property="og:site_name" content="Phil&#39;s blog">
 <meta property="og:description" content="題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。 123456789def test(actual, expected)  Test.assert_equals(actual, expected)endTest.describe(&quot;example tests&quot;) do  test(solution(10), 23)  test">
 <meta property="og:locale" content="zh_TW">
@@ -35,7 +35,7 @@
 <meta property="article:tag" content="Codewar">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://localhost:4000/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/">
+<link rel="canonical" href="https://phillee.cc/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/">
 
 
 <script id="page-configurations">
@@ -191,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -231,15 +231,12 @@
       
         <p>題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(actual, expected)</span></span></span><br><span class="line">  Test.assert_equals(actual, expected)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Test.describe(<span class="string">&quot;example tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">  test(solution(<span class="number">10</span>), <span class="number">23</span>)</span><br><span class="line">  test(solution(<span class="number">20</span>), <span class="number">78</span>)</span><br><span class="line">  test(solution(<span class="number">200</span>), <span class="number">9168</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><ol>
 <li><p>先把1-number的數字抓出來變成一個陣列</p>
 <p>(註：後來發現其實可以用1…number只取小於的數字，不包含最大值)</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(number)</span></span></span><br><span class="line">  (<span class="number">1</span>..number - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(number)</span></span></span><br><span class="line">  (<span class="number">1</span>..number - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
 <li><p>要對每個元素做選取的動作，所以可以用select，然後取可以整除3或5的數字出來</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(number)</span></span></span><br><span class="line">  (<span class="number">1</span>..number - <span class="number">1</span>).select &#123; <span class="params">|x|</span> x % <span class="number">3</span> == <span class="number">0</span> <span class="params">||</span> x % <span class="number">5</span> == <span class="number">0</span> &#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(number)</span></span></span><br><span class="line">  (<span class="number">1</span>..number - <span class="number">1</span>).select &#123; <span class="params">|x|</span> x % <span class="number">3</span> == <span class="number">0</span> <span class="params">||</span> x % <span class="number">5</span> == <span class="number">0</span> &#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
 <li><p>最後再用sum相加得到最後結果</p>
 </li>
 </ol>
