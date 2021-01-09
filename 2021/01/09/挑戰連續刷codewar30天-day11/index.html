@@ -21,21 +21,21 @@
     var CONFIG = {"hostname":"phillee.cc","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="說明：這次沒有說明，就是按照以下邏輯去完成題目。123accum(&quot;abcd&quot;) -&gt; &quot;A-Bb-Ccc-Dddd&quot;accum(&quot;RqaEzty&quot;) -&gt; &quot;R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy&quot;accum(&quot;cwAt&quot;) -&gt; &quot;C-W">
+  <meta name="description" content="題目：找到中間值的indexExample:12345678Test.describe(&quot;Basic Tests&quot;) doTest.assert_equals(gimme([2, 3, 1]), 0, &amp;#x27;Finds the index of middle element&amp;#x27;)Test.assert_equals(gimme([5, 10, 14]), 1, &amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="挑戰連續刷codewar30天-day4">
-<meta property="og:url" content="https://phillee.cc/2021/01/02/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day4/index.html">
+<meta property="og:title" content="挑戰連續刷codewar30天-day11">
+<meta property="og:url" content="https://phillee.cc/2021/01/09/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day11/index.html">
 <meta property="og:site_name" content="Phil&#39;s blog">
-<meta property="og:description" content="說明：這次沒有說明，就是按照以下邏輯去完成題目。123accum(&quot;abcd&quot;) -&gt; &quot;A-Bb-Ccc-Dddd&quot;accum(&quot;RqaEzty&quot;) -&gt; &quot;R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy&quot;accum(&quot;cwAt&quot;) -&gt; &quot;C-W">
+<meta property="og:description" content="題目：找到中間值的indexExample:12345678Test.describe(&quot;Basic Tests&quot;) doTest.assert_equals(gimme([2, 3, 1]), 0, &amp;#x27;Finds the index of middle element&amp;#x27;)Test.assert_equals(gimme([5, 10, 14]), 1, &amp;">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2021-01-02T15:44:59.000Z">
-<meta property="article:modified_time" content="2021-01-02T15:46:06.152Z">
+<meta property="article:published_time" content="2021-01-09T13:18:57.000Z">
+<meta property="article:modified_time" content="2021-01-09T16:41:39.637Z">
 <meta property="article:author" content="Phil lee">
 <meta property="article:tag" content="Ruby on Rails">
 <meta property="article:tag" content="Codewar">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://phillee.cc/2021/01/02/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day4/">
+<link rel="canonical" href="https://phillee.cc/2021/01/09/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day11/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>挑戰連續刷codewar30天-day4 | Phil's blog</title>
+  <title>挑戰連續刷codewar30天-day11 | Phil's blog</title>
   
 
 
@@ -191,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/02/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day4/">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/09/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day11/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -204,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          挑戰連續刷codewar30天-day4
+          挑戰連續刷codewar30天-day11
         </h1>
 
         <div class="post-meta">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-01-02 23:44:59 / Modified: 23:46:06" itemprop="dateCreated datePublished" datetime="2021-01-02T23:44:59+08:00">2021-01-02</time>
+              <time title="Created: 2021-01-09 21:18:57" itemprop="dateCreated datePublished" datetime="2021-01-09T21:18:57+08:00">2021-01-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-10 00:41:39" itemprop="dateModified" datetime="2021-01-10T00:41:39+08:00">2021-01-10</time>
+              </span>
 
           
 
@@ -229,19 +235,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="說明：這次沒有說明，就是按照以下邏輯去完成題目。"><a href="#說明：這次沒有說明，就是按照以下邏輯去完成題目。" class="headerlink" title="說明：這次沒有說明，就是按照以下邏輯去完成題目。"></a>說明：這次沒有說明，就是按照以下邏輯去完成題目。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">accum(&quot;abcd&quot;) -&gt; &quot;A-Bb-Ccc-Dddd&quot;</span><br><span class="line">accum(&quot;RqaEzty&quot;) -&gt; &quot;R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy&quot;</span><br><span class="line">accum(&quot;cwAt&quot;) -&gt; &quot;C-Ww-Aaa-Tttt&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="題目："><a href="#題目：" class="headerlink" title="題目："></a>題目：</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Test.describe(<span class="string">&quot;accum&quot;</span>) <span class="keyword">do</span></span><br><span class="line">    Test.it(<span class="string">&quot;Basic tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">    	  Test.assert_equals(accum(<span class="string">&quot;ZpglnRxqenU&quot;</span>), <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;NyffsGeyylB&quot;</span>), <span class="string">&quot;N-Yy-Fff-Ffff-Sssss-Gggggg-Eeeeeee-Yyyyyyyy-Yyyyyyyyy-Llllllllll-Bbbbbbbbbbb&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;MjtkuBovqrU&quot;</span>), <span class="string">&quot;M-Jj-Ttt-Kkkk-Uuuuu-Bbbbbb-Ooooooo-Vvvvvvvv-Qqqqqqqqq-Rrrrrrrrrr-Uuuuuuuuuuu&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;EvidjUnokmM&quot;</span>), <span class="string">&quot;E-Vv-Iii-Dddd-Jjjjj-Uuuuuu-Nnnnnnn-Oooooooo-Kkkkkkkkk-Mmmmmmmmmm-Mmmmmmmmmmm&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;HbideVbxncC&quot;</span>), <span class="string">&quot;H-Bb-Iii-Dddd-Eeeee-Vvvvvv-Bbbbbbb-Xxxxxxxx-Nnnnnnnnn-Cccccccccc-Ccccccccccc&quot;</span>)</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="解題："><a href="#解題：" class="headerlink" title="解題："></a>解題：</h3><ol>
-<li><p>先將題目的字串全部統一換成小寫</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> <span class="string">&quot;zpglnrxqenu&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>用chars把每個字拆開，同時變成一個陣列</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;z&quot;</span>, <span class="string">&quot;p&quot;</span>, <span class="string">&quot;g&quot;</span>, <span class="string">&quot;l&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;r&quot;</span>, <span class="string">&quot;x&quot;</span>, <span class="string">&quot;q&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;u&quot;</span>]</span><br></pre></td></tr></table></figure></li>
-<li><p>用map.with_index方法對陣列每一個字元做事情，這邊用with_index可以抓到每個字元的索引值，然後讓他們倍數複製</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;z&quot;</span>, <span class="string">&quot;pp&quot;</span>, <span class="string">&quot;ggg&quot;</span>, <span class="string">&quot;llll&quot;</span>, <span class="string">&quot;nnnnn&quot;</span>, <span class="string">&quot;rrrrrr&quot;</span>, <span class="string">&quot;xxxxxxx&quot;</span>, <span class="string">&quot;qqqqqqqq&quot;</span>, <span class="string">&quot;eeeeeeeee&quot;</span>, <span class="string">&quot;nnnnnnnnnn&quot;</span>, <span class="string">&quot;uuuuuuuuuuu&quot;</span>]</span><br></pre></td></tr></table></figure></li>
-<li><p>用capitalize讓每個元素的首字大寫</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;Z&quot;</span>, <span class="string">&quot;Pp&quot;</span>, <span class="string">&quot;Ggg&quot;</span>, <span class="string">&quot;Llll&quot;</span>, <span class="string">&quot;Nnnnn&quot;</span>, <span class="string">&quot;Rrrrrr&quot;</span>, <span class="string">&quot;Xxxxxxx&quot;</span>, <span class="string">&quot;Qqqqqqqq&quot;</span>, <span class="string">&quot;Eeeeeeeee&quot;</span>, <span class="string">&quot;Nnnnnnnnnn&quot;</span>, <span class="string">&quot;Uuuuuuuuuuu&quot;</span>]</span><br></pre></td></tr></table></figure></li>
-<li><p>最後用join(‘-‘)把所有元素用’-‘符號穿在一起變成字串，得到最後結果</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">accum</span><span class="params">(s)</span></span></span><br><span class="line">	s.downcase.chars.map.with_index &#123;<span class="params">|x, index|</span> (x * (index + <span class="number">1</span>)).capitalize&#125;.join(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+        <h3 id="題目：找到中間值的index"><a href="#題目：找到中間值的index" class="headerlink" title="題目：找到中間值的index"></a>題目：找到中間值的index</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Test.describe(<span class="string">&quot;Basic Tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">Test.assert_equals(gimme([<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>]), <span class="number">0</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">5</span>, <span class="number">10</span>, <span class="number">14</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">15</span>, <span class="number">10</span>, <span class="number">14</span>]), <span class="number">2</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([-<span class="number">0.410</span>, -<span class="number">23</span>, <span class="number">4</span>]), <span class="number">0</span>, <span class="string">&#x27;Finds the index of middle element(Negative numbers)&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([-<span class="number">15</span>, -<span class="number">10</span>, <span class="number">14</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element (Negative numbers)&#x27;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><ol>
+<li><p>我們必須先找到哪個數字是中間值，所以把這個陣列按照順序排列，因為題目都是只有三個元素，所以我就取第二個，然後給他一個變數以便後面取用。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gimme</span><span class="params">(arr)</span></span></span><br><span class="line">  middle_element = (arr.sort)[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;</span><br><span class="line">Finds the index of middle element -  <span class="symbol">Expected:</span> <span class="number">0</span>, instead <span class="symbol">got:</span> <span class="number">2</span></span><br><span class="line">Finds the index of middle element -  <span class="symbol">Expected:</span> <span class="number">1</span>, instead <span class="symbol">got:</span> <span class="number">10</span></span><br><span class="line">Finds the index of middle element -  <span class="symbol">Expected:</span> <span class="number">1</span>, instead <span class="symbol">got:</span> <span class="number">3</span></span><br><span class="line">Finds the index of middle element -  <span class="symbol">Expected:</span> <span class="number">2</span>, instead <span class="symbol">got:</span> <span class="number">14</span></span><br><span class="line">Finds the index of middle element(Negative numbers) -  <span class="symbol">Expected:</span> <span class="number">0</span>, instead <span class="symbol">got:</span> -<span class="number">0.41</span></span><br><span class="line">Finds the index of middle element (Negative numbers) -  <span class="symbol">Expected:</span> <span class="number">1</span>, instead <span class="symbol">got:</span> -<span class="number">10</span></span><br></pre></td></tr></table></figure></li>
+<li><p>接下來就是要找到這個值在原本的陣列中的位置</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gimme</span><span class="params">(arr)</span></span></span><br><span class="line">  middle_element = (arr.sort)[<span class="number">1</span>]</span><br><span class="line">  arr.index(middle_element)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 
     </div>
@@ -262,13 +261,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/01/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day3/" rel="prev" title="挑戰連續刷codewar30天-day3">
-      <i class="fa fa-chevron-left"></i> 挑戰連續刷codewar30天-day3
+    <a href="/2021/01/08/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day10/" rel="prev" title="挑戰連續刷codewar30天-day10">
+      <i class="fa fa-chevron-left"></i> 挑戰連續刷codewar30天-day10
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/" rel="next" title="挑戰連續刷codewar30天-day5">
-      挑戰連續刷codewar30天-day5 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -327,7 +323,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E%EF%BC%9A%E9%80%99%E6%AC%A1%E6%B2%92%E6%9C%89%E8%AA%AA%E6%98%8E%EF%BC%8C%E5%B0%B1%E6%98%AF%E6%8C%89%E7%85%A7%E4%BB%A5%E4%B8%8B%E9%82%8F%E8%BC%AF%E5%8E%BB%E5%AE%8C%E6%88%90%E9%A1%8C%E7%9B%AE%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">說明：這次沒有說明，就是按照以下邏輯去完成題目。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">題目：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">解題：</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE%EF%BC%9A%E6%89%BE%E5%88%B0%E4%B8%AD%E9%96%93%E5%80%BC%E7%9A%84index"><span class="nav-number">1.</span> <span class="nav-text">題目：找到中間值的index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example"><span class="nav-number">2.</span> <span class="nav-text">Example:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E6%96%B9%E5%90%91%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">解題方向：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

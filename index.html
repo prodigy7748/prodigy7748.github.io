@@ -184,6 +184,214 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/09/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/09/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day11/" class="post-title-link" itemprop="url">挑戰連續刷codewar30天-day11</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-09 21:18:57" itemprop="dateCreated datePublished" datetime="2021-01-09T21:18:57+08:00">2021-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-10 00:41:39" itemprop="dateModified" datetime="2021-01-10T00:41:39+08:00">2021-01-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="題目：找到中間值的index"><a href="#題目：找到中間值的index" class="headerlink" title="題目：找到中間值的index"></a>題目：找到中間值的index</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Test.describe(<span class="string">&quot;Basic Tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">Test.assert_equals(gimme([<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>]), <span class="number">0</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">5</span>, <span class="number">10</span>, <span class="number">14</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">15</span>, <span class="number">10</span>, <span class="number">14</span>]), <span class="number">2</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([-<span class="number">0.410</span>, -<span class="number">23</span>, <span class="number">4</span>]), <span class="number">0</span>, <span class="string">&#x27;Finds the index of middle element(Negative numbers)&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([-<span class="number">15</span>, -<span class="number">10</span>, <span class="number">14</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element (Negative numbers)&#x27;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><ol>
+<li><p>我們必須先找到哪個數字是中間值，所以把這個陣列按照順序排列，因為題目都是只有三個元素，所以我就取第二個，然後給他一個變數以便後面取用。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gimme</span><span class="params">(arr)</span></span></span><br><span class="line">  middle_element = (arr.sort)[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;</span><br><span class="line">Finds the index of middle element -  <span class="symbol">Expected:</span> <span class="number">0</span>, instead <span class="symbol">got:</span> <span class="number">2</span></span><br><span class="line">Finds the index of middle element -  <span class="symbol">Expected:</span> <span class="number">1</span>, instead <span class="symbol">got:</span> <span class="number">10</span></span><br><span class="line">Finds the index of middle element -  <span class="symbol">Expected:</span> <span class="number">1</span>, instead <span class="symbol">got:</span> <span class="number">3</span></span><br><span class="line">Finds the index of middle element -  <span class="symbol">Expected:</span> <span class="number">2</span>, instead <span class="symbol">got:</span> <span class="number">14</span></span><br><span class="line">Finds the index of middle element(Negative numbers) -  <span class="symbol">Expected:</span> <span class="number">0</span>, instead <span class="symbol">got:</span> -<span class="number">0.41</span></span><br><span class="line">Finds the index of middle element (Negative numbers) -  <span class="symbol">Expected:</span> <span class="number">1</span>, instead <span class="symbol">got:</span> -<span class="number">10</span></span><br></pre></td></tr></table></figure></li>
+<li><p>接下來就是要找到這個值在原本的陣列中的位置</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gimme</span><span class="params">(arr)</span></span></span><br><span class="line">  middle_element = (arr.sort)[<span class="number">1</span>]</span><br><span class="line">  arr.index(middle_element)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/08/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/08/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day10/" class="post-title-link" itemprop="url">挑戰連續刷codewar30天-day10</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-08 23:18:36" itemprop="dateCreated datePublished" datetime="2021-01-08T23:18:36+08:00">2021-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-10 00:20:21" itemprop="dateModified" datetime="2021-01-10T00:20:21+08:00">2021-01-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="題目：將駝峰式名稱拆開（好難翻啊…還是直接看範例吧！）"><a href="#題目：將駝峰式名稱拆開（好難翻啊…還是直接看範例吧！）" class="headerlink" title="題目：將駝峰式名稱拆開（好難翻啊…還是直接看範例吧！）"></a>題目：將駝峰式名稱拆開（好難翻啊…還是直接看範例吧！）</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Test.assert_equals(solution(<span class="string">&#x27;camelCasing&#x27;</span>), <span class="string">&#x27;camel Casing&#x27;</span>)</span><br><span class="line">Test.assert_equals(solution(<span class="string">&#x27;camelCasingTest&#x27;</span>), <span class="string">&#x27;camel Casing Test&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><ol>
+<li><p>想到要拆字串，心中有幾個常用的方法浮現，chars會將它拆成個別字元，所以不是我要的，而split或許是個選項，接下來的問題就是如何找到大寫字母來做拆解條件？或許可以用常規標示法來做，於是就來直接餵狗(google)啦！我下的關鍵字是”split capital case ruby”，很幸運的在第一頁就找到解法@@<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3997516/how-to-split-a-camelcase-string-in-its-substrings-in-ruby">https://stackoverflow.com/questions/3997516/how-to-split-a-camelcase-string-in-its-substrings-in-ruby</a></p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(string)</span></span></span><br><span class="line">  string.split(<span class="regexp">/(?=[A-Z])/</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;<span class="symbol">Expected:</span> <span class="string">&quot;camel Casing&quot;</span>, instead <span class="symbol">got:</span> [<span class="string">&quot;camel&quot;</span>, <span class="string">&quot;Casing&quot;</span>]</span><br></pre></td></tr></table></figure></li>
+<li><p>第一步完成將駝峰拆掉了，接下來是如何組回去字串，並且在中間加上空格。刷過幾次codewar之後，對陣列轉字串應該就不陌生了，join是大家的好朋友～我就用它來結束這一回合吧！</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(string)</span></span></span><br><span class="line">  string.split(<span class="regexp">/(?=[A-Z])/</span>).join(<span class="string">&quot; &quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/07/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/07/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day9/" class="post-title-link" itemprop="url">挑戰連續刷codewar30天-day9</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-07 22:17:30" itemprop="dateCreated datePublished" datetime="2021-01-07T22:17:30+08:00">2021-01-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-08 23:18:41" itemprop="dateModified" datetime="2021-01-08T23:18:41+08:00">2021-01-08</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="題目：判斷數字是否為平方"><a href="#題目：判斷數字是否為平方" class="headerlink" title="題目：判斷數字是否為平方"></a>題目：判斷數字是否為平方</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">describe <span class="string">&quot;is_square&quot;</span> <span class="keyword">do</span></span><br><span class="line">  it <span class="string">&quot;should work for some examples&quot;</span> <span class="keyword">do</span></span><br><span class="line">    Test.assert_equals (is_square (-<span class="number">1</span>)), <span class="literal">false</span>, <span class="string">&quot;-1 is not a perfect square&quot;</span></span><br><span class="line">    Test.assert_equals (is_square  <span class="number">0</span>),   <span class="literal">true</span>,  <span class="string">&quot;0 is a perfect square (0 * 0)&quot;</span></span><br><span class="line">    Test.assert_equals (is_square  <span class="number">3</span>),   <span class="literal">false</span>,  <span class="string">&quot;3 is not a perfect square&quot;</span></span><br><span class="line">    Test.assert_equals (is_square  <span class="number">4</span>),    <span class="literal">true</span>,   <span class="string">&quot;4 is a perfect square (2 * 2)&quot;</span></span><br><span class="line">    Test.assert_equals (is_square <span class="number">25</span>),    <span class="literal">true</span>,  <span class="string">&quot;25 is a perfect square (5 * 5)&quot;</span></span><br><span class="line">    Test.assert_equals (is_square <span class="number">26</span>),   <span class="literal">false</span>, <span class="string">&quot;26 is not a perfect square&quot;</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><p>先排除掉負值，如果是平方，開根號會是整數，所以除以1會等於0，反之則否。所以直接將參數開根號去除以1去餘數0.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_square</span><span class="params">(x)</span></span></span><br><span class="line">  <span class="comment">#x等於0，或開根號後得到整數</span></span><br><span class="line">  x &gt;= <span class="number">0</span> &amp;&amp; Math.sqrt(x) % <span class="number">1</span> == <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/06/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -711,241 +919,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2020/12/31/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/31/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day2/" class="post-title-link" itemprop="url">挑戰連續刷codewar30天-day2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-31 23:08:19" itemprop="dateCreated datePublished" datetime="2020-12-31T23:08:19+08:00">2020-12-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-02 23:25:13" itemprop="dateModified" datetime="2021-01-02T23:25:13+08:00">2021-01-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。"><a href="#題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。" class="headerlink" title="題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。"></a>題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。</h3><h3 id="結果："><a href="#結果：" class="headerlink" title="結果："></a>結果：</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Test.assert_equals(sum_square_even_root_odd([<span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>]), <span class="number">91.61</span>)</span><br><span class="line"></span><br><span class="line">Test.assert_equals(sum_square_even_root_odd([<span class="number">1</span>, <span class="number">14</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">17</span>, <span class="number">21</span>]), <span class="number">272.71</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="解題說明"><a href="#解題說明" class="headerlink" title="解題說明:"></a>解題說明:</h3><p>用map對陣列內每個元素做判斷，如果是基數，就乘以0.5次方；如果是偶數，就乘以2次方。最後sum加總再用round取小數點兩位</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum_square_even_root_odd</span><span class="params">(nums)</span></span></span><br><span class="line"></span><br><span class="line">	nums.map&#123; <span class="params">|x|</span> x.odd? ? x ** <span class="number">0.5</span> : x ** <span class="number">2</span> &#125;.sum.round(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2020/12/30/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/30/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day1/" class="post-title-link" itemprop="url">挑戰連續刷codewar30天-day1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-30 22:35:06" itemprop="dateCreated datePublished" datetime="2020-12-30T22:35:06+08:00">2020-12-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-02 23:25:18" itemprop="dateModified" datetime="2021-01-02T23:25:18+08:00">2021-01-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>雖然今年沒能搭上鐵人賽的列車，但還是想給過去惰性滿滿的自己一些挑戰，從今天開始連續刷30天的codewar！！</p>
-<h3 id="題目說明：取最大值與最小值"><a href="#題目說明：取最大值與最小值" class="headerlink" title="題目說明：取最大值與最小值"></a>題目說明：取最大值與最小值</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Test.assert_equals(high_and_low(<span class="string">&quot;4 5 29 54 4 0 -214 542 -64 1 -3 6 -6&quot;</span>), <span class="string">&quot;542 -214&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="起始內容："><a href="#起始內容：" class="headerlink" title="起始內容："></a>起始內容：</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>解題步驟：</p>
-<p>1.把字串裡的每個字用split分開，並且得到新的陣列</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line">	numbers.split</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;[<span class="string">&quot;4&quot;</span>, <span class="string">&quot;5&quot;</span>, <span class="string">&quot;29&quot;</span>, <span class="string">&quot;54&quot;</span>, <span class="string">&quot;4&quot;</span>, <span class="string">&quot;0&quot;</span>, <span class="string">&quot;-214&quot;</span>, <span class="string">&quot;542&quot;</span>, <span class="string">&quot;-64&quot;</span>, <span class="string">&quot;1&quot;</span>, <span class="string">&quot;-3&quot;</span>, <span class="string">&quot;6&quot;</span>, <span class="string">&quot;-6&quot;</span>]</span><br></pre></td></tr></table></figure>
-<p>2.用map對陣列每個元素做轉換成數字</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line">	numbers.split.map&#123;<span class="params">|x|</span> x.to_i&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;[<span class="number">4</span>, <span class="number">5</span>, <span class="number">29</span>, <span class="number">54</span>, <span class="number">4</span>, <span class="number">0</span>, -<span class="number">214</span>, <span class="number">542</span>, -<span class="number">64</span>, <span class="number">1</span>, -<span class="number">3</span>, <span class="number">6</span>, -<span class="number">6</span>]</span><br></pre></td></tr></table></figure>
-<p>3.用minmax取最小及最大值，再reverse把最大值放前面</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line">	numbers.split.map&#123;<span class="params">|x|</span> x.to_i&#125;.minmax.reverse</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;[<span class="number">542</span>, -<span class="number">214</span>]</span><br></pre></td></tr></table></figure>
-<p>4.最後join把陣列變回字串，並且在中間加上空格</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line">	numbers.split.map&#123;<span class="params">|x|</span> x.to_i&#125;.minmax.reverse.join(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">=&gt;<span class="string">&quot;542 -214&quot;</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2020/12/28/%E5%A6%82%E4%BD%95%E5%9C%A8%E4%B8%80%E5%80%8Bform%E8%A3%A1%E9%9D%A2%E5%AF%AB%E5%85%A5%E5%85%A9%E5%80%8Bmodel%E7%9A%84%E6%AC%84%E4%BD%8D%EF%BC%9F%E5%A6%82%E4%BD%95%E5%88%AA%E9%99%A4%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/28/%E5%A6%82%E4%BD%95%E5%9C%A8%E4%B8%80%E5%80%8Bform%E8%A3%A1%E9%9D%A2%E5%AF%AB%E5%85%A5%E5%85%A9%E5%80%8Bmodel%E7%9A%84%E6%AC%84%E4%BD%8D%EF%BC%9F%E5%A6%82%E4%BD%95%E5%88%AA%E9%99%A4%EF%BC%9F/" class="post-title-link" itemprop="url">如何在一個form裡面寫入兩個model的資料？(nested_form)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-28 22:00:38" itemprop="dateCreated datePublished" datetime="2020-12-28T22:00:38+08:00">2020-12-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-06 18:38:10" itemprop="dateModified" datetime="2021-01-06T18:38:10+08:00">2021-01-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在剛學習rails的時候，表單通常都是單純的一個model填完欄位就送出，直到實際專案在進行時，才遇到需要將兩個model放在同一個form裡面，同時可以儲存資料到個別model的資料庫的需求。這時候就需要用到本篇文章要介紹的主角：Nested form</p>
-<p>在我們募資網站的專案例子中，project跟givebacks(回饋商品)是一對多的關係，而我們想在project new頁面的form裡面，同時放入giveback的欄位，可使用fields_for，將兩個model放在同一個form裡面。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#project.rb</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Project</span> &lt; ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:user</span></span><br><span class="line">  has_many <span class="symbol">:givebacks</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#giveback.rb</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Giveback</span> &lt; ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:project</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>按照官方文件的說明，我大概將它分成四個步驟：</p>
-<ol>
-<li><p>建立一個attribute writer方法到project model裡面</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#project.rb</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Project</span> &lt; ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:user</span></span><br><span class="line">  has_many <span class="symbol">:givebacks</span></span><br><span class="line">  accepts_nested_attributes_for <span class="symbol">:givebacks</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
-<li><p>用fields_for方法建立nested form（請注意：fields_for後面接的是符號）</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#_form.html.erb</span></span><br><span class="line"></span><br><span class="line">&lt;%= form_for(project) <span class="keyword">do</span> <span class="params">|form|</span> %&gt;</span><br><span class="line">  &lt;div class=&quot;project-title&quot;&gt;</span><br><span class="line">    &lt;%= form.label <span class="symbol">:title</span>, <span class="string">&#x27;專案標題&#x27;</span> %&gt;</span><br><span class="line">    &lt;%= form.text_field <span class="symbol">:title%&gt;</span></span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">	</span></span><br><span class="line"><span class="regexp">	·········（略）···········</span></span><br><span class="line"><span class="regexp">	#下面是giveback的欄位</span></span><br><span class="line"><span class="regexp">  &lt;div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;%= form.fields_for :givebacks do |givebacks_form| %&gt;</span></span><br><span class="line"><span class="regexp">      &lt;%= givebacks_form.label :回饋商品名稱 %&gt;</span></span><br><span class="line"><span class="regexp">      &lt;%= givebacks_form.text_field :title %&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/div</span>&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">      &lt;%= givebacks_form.label <span class="symbol">:</span>價格 %&gt;</span><br><span class="line">      &lt;%= givebacks_form.text_field <span class="symbol">:price</span> %&gt; </span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  &lt;% end %&gt;</span></span><br><span class="line"><span class="regexp">  &lt;%= form.submit %&gt;</span></span><br><span class="line"><span class="regexp">&lt;% end %&gt;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>將giveback的資料加到permit</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#projects_controller.rb</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">project_params</span></span></span><br><span class="line">    params.<span class="keyword">require</span>(<span class="symbol">:project</span>).permit(<span class="symbol">:id</span>, <span class="symbol">:title</span>, <span class="symbol">:category</span>, <span class="symbol">:summary</span>, <span class="symbol">:content</span>, <span class="symbol">:pic</span>, <span class="symbol">:target_amount</span>, <span class="symbol">:user_id</span>, <span class="symbol">givebacks_attributes:</span> [<span class="symbol">:title</span>, <span class="symbol">:price</span>, <span class="symbol">:deliver_time</span>])</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p> 註：id也要被permit過去，否則在update project資料時，giveback因為沒有id的關係，會被判斷成我們要create一個新的，一直製造新的giveback實體。</p>
-</li>
-<li><p>在project controller的new方法裡面建立givebacks的實體</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#projects_controller.rb</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new</span></span></span><br><span class="line">    <span class="variable">@project</span> = Project.new</span><br><span class="line">    <span class="variable">@project</span>.givebacks.build</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>這時候填完資料按下送出，應該就可以看到兩個model的資料同時寫入資料庫了。</p>
-</li>
-</ol>
-<p><img src="/2020/12/28/%E5%A6%82%E4%BD%95%E5%9C%A8%E4%B8%80%E5%80%8Bform%E8%A3%A1%E9%9D%A2%E5%AF%AB%E5%85%A5%E5%85%A9%E5%80%8Bmodel%E7%9A%84%E6%AC%84%E4%BD%8D%EF%BC%9F%E5%A6%82%E4%BD%95%E5%88%AA%E9%99%A4%EF%BC%9F/%E6%88%AA%E5%9C%96-2020-12-28.png"></p>
-<p>備註：在第四個步驟中，我們只能建立一個giveback的實體，如果需要要建立多個實體及資料，可使用times的方法。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new</span></span></span><br><span class="line">    <span class="variable">@project</span> = Project.new</span><br><span class="line">    <span class="number">5</span>.times &#123;<span class="variable">@project</span>.givebacks.build&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h2 id="如何刪除fields-for的資料（後續更新用js來做）"><a href="#如何刪除fields-for的資料（後續更新用js來做）" class="headerlink" title="如何刪除fields_for的資料（後續更新用js來做）"></a>如何刪除fields_for的資料（後續更新用js來做）</h2><ol>
-<li><p>在fields_for裡面設定刪除的checkbox選項</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;%= givebacks_form.check_box <span class="symbol">:_destroy</span> %&gt;</span><br><span class="line">  &lt;%= givebacks_form.label <span class="symbol">:_destroy</span>, <span class="string">&#x27;刪除回饋商品&#x27;</span> %&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>在project的model裡面設定allow_destroy</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Project</span> &lt; ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:user</span></span><br><span class="line">  has_many <span class="symbol">:givebacks</span></span><br><span class="line">  accepts_nested_attributes_for <span class="symbol">:givebacks</span>, <span class="symbol">allow_destroy:</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>這只是目前我理出的概略步驟，其他詳細說明及用法可參考官方文件：</p>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://guides.rubyonrails.org/form_helpers.html#building-complex-forms">https://guides.rubyonrails.org/form_helpers.html#building-complex-forms</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1015,7 +988,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
