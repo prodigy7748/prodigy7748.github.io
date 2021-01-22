@@ -17,7 +17,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Ruby on Rails學習筆記-模組(Module)</title>
+    <title>Ruby on Rails學習筆記-Module</title>
     <url>/2020/11/28/Ruby%20on%20Rails%20%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Module/</url>
     <content><![CDATA[<p>有時有多個類別都需要使用同個方法，這時候可以定義一個模組，讓每個類別可以引入取用。</p>
 <h2 id="模組與繼承的不同之處："><a href="#模組與繼承的不同之處：" class="headerlink" title="模組與繼承的不同之處："></a>模組與繼承的不同之處：</h2><ul>
@@ -245,7 +245,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day4</title>
+    <title>codewar-map.with_index</title>
     <url>/2021/01/02/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day4/</url>
     <content><![CDATA[<h3 id="說明：這次沒有說明，就是按照以下邏輯去完成題目。"><a href="#說明：這次沒有說明，就是按照以下邏輯去完成題目。" class="headerlink" title="說明：這次沒有說明，就是按照以下邏輯去完成題目。"></a>說明：這次沒有說明，就是按照以下邏輯去完成題目。</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">accum(&quot;abcd&quot;) -&gt; &quot;A-Bb-Ccc-Dddd&quot;</span><br><span class="line">accum(&quot;RqaEzty&quot;) -&gt; &quot;R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy&quot;</span><br><span class="line">accum(&quot;cwAt&quot;) -&gt; &quot;C-Ww-Aaa-Tttt&quot;</span><br></pre></td></tr></table></figure>
 <h3 id="題目："><a href="#題目：" class="headerlink" title="題目："></a>題目：</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Test.describe(<span class="string">&quot;accum&quot;</span>) <span class="keyword">do</span></span><br><span class="line">    Test.it(<span class="string">&quot;Basic tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">    	  Test.assert_equals(accum(<span class="string">&quot;ZpglnRxqenU&quot;</span>), <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;NyffsGeyylB&quot;</span>), <span class="string">&quot;N-Yy-Fff-Ffff-Sssss-Gggggg-Eeeeeee-Yyyyyyyy-Yyyyyyyyy-Llllllllll-Bbbbbbbbbbb&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;MjtkuBovqrU&quot;</span>), <span class="string">&quot;M-Jj-Ttt-Kkkk-Uuuuu-Bbbbbb-Ooooooo-Vvvvvvvv-Qqqqqqqqq-Rrrrrrrrrr-Uuuuuuuuuuu&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;EvidjUnokmM&quot;</span>), <span class="string">&quot;E-Vv-Iii-Dddd-Jjjjj-Uuuuuu-Nnnnnnn-Oooooooo-Kkkkkkkkk-Mmmmmmmmmm-Mmmmmmmmmmm&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;HbideVbxncC&quot;</span>), <span class="string">&quot;H-Bb-Iii-Dddd-Eeeee-Vvvvvv-Bbbbbbb-Xxxxxxxx-Nnnnnnnnn-Cccccccccc-Ccccccccccc&quot;</span>)</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
@@ -268,7 +268,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day5</title>
+    <title>codewar-取小於number的數字中，可以被3以及5整除的數字的總和</title>
     <url>/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/</url>
     <content><![CDATA[<h3 id="題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。"><a href="#題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。" class="headerlink" title="題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。"></a>題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(actual, expected)</span></span></span><br><span class="line">  Test.assert_equals(actual, expected)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Test.describe(<span class="string">&quot;example tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">  test(solution(<span class="number">10</span>), <span class="number">23</span>)</span><br><span class="line">  test(solution(<span class="number">20</span>), <span class="number">78</span>)</span><br><span class="line">  test(solution(<span class="number">200</span>), <span class="number">9168</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><ol>
@@ -287,7 +287,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day6</title>
+    <title>codewar-將數字從大到小排列</title>
     <url>/2021/01/04/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day6/</url>
     <content><![CDATA[<h3 id="說明：將數字從大到小排列"><a href="#說明：將數字從大到小排列" class="headerlink" title="說明：將數字從大到小排列"></a>說明：將數字從大到小排列</h3><h3 id="題目"><a href="#題目" class="headerlink" title="題目:"></a>題目:</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Test.assert_equals(descending_order(<span class="number">0</span>), <span class="number">0</span>)</span><br><span class="line">Test.assert_equals(descending_order(<span class="number">1</span>), <span class="number">1</span>)</span><br><span class="line">Test.assert_equals(descending_order(<span class="number">123456789</span>), <span class="number">987654321</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="初始狀態："><a href="#初始狀態：" class="headerlink" title="初始狀態："></a>初始狀態：</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">descending_order</span><span class="params">(n)</span></span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
@@ -304,7 +304,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day7</title>
+    <title>codewar-找到陣列中只有一個的數字</title>
     <url>/2021/01/05/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day7/</url>
     <content><![CDATA[<h3 id="題目：找到陣列中只有一個的數字"><a href="#題目：找到陣列中只有一個的數字" class="headerlink" title="題目：找到陣列中只有一個的數字"></a>題目：找到陣列中只有一個的數字</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>] ==&gt; <span class="number">2</span></span><br><span class="line">[<span class="number">17</span>, <span class="number">17</span>, <span class="number">3</span>, <span class="number">17</span>, <span class="number">17</span>, <span class="number">17</span>, <span class="number">17</span>] ==&gt; <span class="number">3</span></span><br></pre></td></tr></table></figure>
 <h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><p>看到要對陣列裡的元素做事情時，都會先想到each, map, select這幾個api，這邊可以用each搭配count去算每個元素的數量，如果等於1代表只有一個，就回傳這個值。</p>
@@ -335,7 +335,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day2</title>
+    <title>codewar-把陣列裡面中偶數平方、單數做開根號</title>
     <url>/2020/12/31/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day2/</url>
     <content><![CDATA[<h3 id="題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。"><a href="#題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。" class="headerlink" title="題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。"></a>題目說明：請把陣列裡面中偶數平方、單數做開根號，然後取最後的總和。</h3><h3 id="結果："><a href="#結果：" class="headerlink" title="結果："></a>結果：</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Test.assert_equals(sum_square_even_root_odd([<span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>]), <span class="number">91.61</span>)</span><br><span class="line"></span><br><span class="line">Test.assert_equals(sum_square_even_root_odd([<span class="number">1</span>, <span class="number">14</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">17</span>, <span class="number">21</span>]), <span class="number">272.71</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="解題說明"><a href="#解題說明" class="headerlink" title="解題說明:"></a>解題說明:</h3><p>用map對陣列內每個元素做判斷，如果是基數，就乘以0.5次方；如果是偶數，就乘以2次方。最後sum加總再用round取小數點兩位</p>
@@ -346,7 +346,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day3</title>
+    <title>codewar-取字串中間的文字</title>
     <url>/2021/01/01/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day3/</url>
     <content><![CDATA[<h3 id="取一段字串中間的文字"><a href="#取一段字串中間的文字" class="headerlink" title="取一段字串中間的文字"></a>取一段字串中間的文字</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kata.getMiddle(&quot;test&quot;) should return &quot;es&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;testing&quot;) should return &quot;t&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;middle&quot;) should return &quot;dd&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;A&quot;) should return &quot;A&quot;</span><br></pre></td></tr></table></figure>
 <h3 id="解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值"><a href="#解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值" class="headerlink" title="解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值"></a>解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值</h3><p>1.如果是單數，就將字串長度除以2再四捨五入，取到中間數</p>
@@ -394,7 +394,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day8</title>
+    <title>codewar-把英文字母轉成它的位置</title>
     <url>/2021/01/06/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day8/</url>
     <content><![CDATA[<h3 id="題目：把英文字母轉成它的位置，忽略所有非英文字母"><a href="#題目：把英文字母轉成它的位置，忽略所有非英文字母" class="headerlink" title="題目：把英文字母轉成它的位置，忽略所有非英文字母"></a>題目：把英文字母轉成它的位置，忽略所有非英文字母</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><p>alphabet_position(“The sunset sets at twelve o’ clock.”)</p>
 <p>Should return “20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11” (as a string)</p>
@@ -420,7 +420,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day10</title>
+    <title>codewar-將駝峰式名稱拆開</title>
     <url>/2021/01/08/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day10/</url>
     <content><![CDATA[<h3 id="題目：將駝峰式名稱拆開（好難翻啊…還是直接看範例吧！）"><a href="#題目：將駝峰式名稱拆開（好難翻啊…還是直接看範例吧！）" class="headerlink" title="題目：將駝峰式名稱拆開（好難翻啊…還是直接看範例吧！）"></a>題目：將駝峰式名稱拆開（好難翻啊…還是直接看範例吧！）</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Test.assert_equals(solution(<span class="string">&#x27;camelCasing&#x27;</span>), <span class="string">&#x27;camel Casing&#x27;</span>)</span><br><span class="line">Test.assert_equals(solution(<span class="string">&#x27;camelCasingTest&#x27;</span>), <span class="string">&#x27;camel Casing Test&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><ol>
@@ -436,7 +436,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day11</title>
+    <title>codewar-找到中間值的index</title>
     <url>/2021/01/09/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day11/</url>
     <content><![CDATA[<h3 id="題目：找到中間值的index"><a href="#題目：找到中間值的index" class="headerlink" title="題目：找到中間值的index"></a>題目：找到中間值的index</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Test.describe(<span class="string">&quot;Basic Tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">Test.assert_equals(gimme([<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>]), <span class="number">0</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">5</span>, <span class="number">10</span>, <span class="number">14</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([<span class="number">15</span>, <span class="number">10</span>, <span class="number">14</span>]), <span class="number">2</span>, <span class="string">&#x27;Finds the index of middle element&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([-<span class="number">0.410</span>, -<span class="number">23</span>, <span class="number">4</span>]), <span class="number">0</span>, <span class="string">&#x27;Finds the index of middle element(Negative numbers)&#x27;</span>)</span><br><span class="line">Test.assert_equals(gimme([-<span class="number">15</span>, -<span class="number">10</span>, <span class="number">14</span>]), <span class="number">1</span>, <span class="string">&#x27;Finds the index of middle element (Negative numbers)&#x27;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><ol>
@@ -452,7 +452,7 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day9</title>
+    <title>codewar-判斷數字是否為平方</title>
     <url>/2021/01/07/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day9/</url>
     <content><![CDATA[<h3 id="題目：判斷數字是否為平方"><a href="#題目：判斷數字是否為平方" class="headerlink" title="題目：判斷數字是否為平方"></a>題目：判斷數字是否為平方</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">describe <span class="string">&quot;is_square&quot;</span> <span class="keyword">do</span></span><br><span class="line">  it <span class="string">&quot;should work for some examples&quot;</span> <span class="keyword">do</span></span><br><span class="line">    Test.assert_equals (is_square (-<span class="number">1</span>)), <span class="literal">false</span>, <span class="string">&quot;-1 is not a perfect square&quot;</span></span><br><span class="line">    Test.assert_equals (is_square  <span class="number">0</span>),   <span class="literal">true</span>,  <span class="string">&quot;0 is a perfect square (0 * 0)&quot;</span></span><br><span class="line">    Test.assert_equals (is_square  <span class="number">3</span>),   <span class="literal">false</span>,  <span class="string">&quot;3 is not a perfect square&quot;</span></span><br><span class="line">    Test.assert_equals (is_square  <span class="number">4</span>),    <span class="literal">true</span>,   <span class="string">&quot;4 is a perfect square (2 * 2)&quot;</span></span><br><span class="line">    Test.assert_equals (is_square <span class="number">25</span>),    <span class="literal">true</span>,  <span class="string">&quot;25 is a perfect square (5 * 5)&quot;</span></span><br><span class="line">    Test.assert_equals (is_square <span class="number">26</span>),   <span class="literal">false</span>, <span class="string">&quot;26 is not a perfect square&quot;</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><p>先排除掉負值，如果是平方，開根號會是整數，所以除以1會等於0，反之則否。所以直接將參數開根號去除以1去餘數0.</p>
