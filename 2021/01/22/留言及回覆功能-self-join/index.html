@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"phillee.cc","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在設計model的時候，會發現有時候model需要跟自己有關連，這次要紀錄的留言及回覆功能就是一個很好的例子，回覆基本上也是留言的一種，我們可以運用self-join這個方法，建立它們之間的關聯。 註：以下範例是基於募資網站的題目，功能設計是需要在募資專案的show頁面當中，user可以留言而提案者可以針對每則留言個別回覆，以下我就針對實作的內容分成conmment跟reply兩個部分跟大家分享。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="留言及回覆功能-self-join">
+<meta property="og:url" content="https://phillee.cc/2021/01/22/%E7%95%99%E8%A8%80%E5%8F%8A%E5%9B%9E%E8%A6%86%E5%8A%9F%E8%83%BD-self-join/index.html">
+<meta property="og:site_name" content="Phil&#39;s blog">
+<meta property="og:description" content="在設計model的時候，會發現有時候model需要跟自己有關連，這次要紀錄的留言及回覆功能就是一個很好的例子，回覆基本上也是留言的一種，我們可以運用self-join這個方法，建立它們之間的關聯。 註：以下範例是基於募資網站的題目，功能設計是需要在募資專案的show頁面當中，user可以留言而提案者可以針對每則留言個別回覆，以下我就針對實作的內容分成conmment跟reply兩個部分跟大家分享。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://phillee.cc/2021/01/22/%E7%95%99%E8%A8%80%E5%8F%8A%E5%9B%9E%E8%A6%86%E5%8A%9F%E8%83%BD-self-join/11.png">
+<meta property="article:published_time" content="2021-01-22T15:58:44.000Z">
+<meta property="article:modified_time" content="2021-01-22T16:01:58.330Z">
+<meta property="article:author" content="Phil lee">
+<meta property="article:tag" content="Ruby on Rails">
+<meta property="article:tag" content="募資網站project">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://phillee.cc/2021/01/22/%E7%95%99%E8%A8%80%E5%8F%8A%E5%9B%9E%E8%A6%86%E5%8A%9F%E8%83%BD-self-join/11.png">
+
+<link rel="canonical" href="https://phillee.cc/2021/01/22/%E7%95%99%E8%A8%80%E5%8F%8A%E5%9B%9E%E8%A6%86%E5%8A%9F%E8%83%BD-self-join/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>留言及回覆功能-self-join | Phil's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Phil's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/22/%E7%95%99%E8%A8%80%E5%8F%8A%E5%9B%9E%E8%A6%86%E5%8A%9F%E8%83%BD-self-join/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          留言及回覆功能-self-join
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-22 23:58:44" itemprop="dateCreated datePublished" datetime="2021-01-22T23:58:44+08:00">2021-01-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-23 00:01:58" itemprop="dateModified" datetime="2021-01-23T00:01:58+08:00">2021-01-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在設計model的時候，會發現有時候model需要跟自己有關連，這次要紀錄的留言及回覆功能就是一個很好的例子，回覆基本上也是留言的一種，我們可以運用self-join這個方法，建立它們之間的關聯。</p>
+<p>註：以下範例是基於募資網站的題目，功能設計是需要在募資專案的show頁面當中，user可以留言而提案者可以針對每則留言個別回覆，以下我就針對實作的內容分成conmment跟reply兩個部分跟大家分享。</p>
+<h3 id="Comment"><a href="#Comment" class="headerlink" title="Comment"></a>Comment</h3><ol>
+<li><p>建立comment model，parent_id是為了comment和reply之間的關聯設定(別忘了rails db:migrate)</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rails g model Comment <span class="symbol">user:</span>references <span class="symbol">project:</span>references <span class="symbol">parent_id:</span>integer <span class="symbol">content:</span>text</span><br></pre></td></tr></table></figure></li>
+<li><p>回到project和user設定has many comment，另外也限定留言不得空白</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app/models/project.rb</span></span><br><span class="line">has_many <span class="symbol">:comments</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># app/models/user.rb</span></span><br><span class="line">has_many <span class="symbol">:comments</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># app/models/comments.rb</span></span><br><span class="line">belongs_to <span class="symbol">:project</span></span><br><span class="line">belongs_to <span class="symbol">:user</span></span><br><span class="line">validates <span class="symbol">:content</span>, presence <span class="symbol">:true</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定comment的路徑</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resources <span class="symbol">:projects</span>, <span class="symbol">shallow:</span> <span class="literal">true</span> <span class="keyword">do</span></span><br><span class="line">  resources <span class="symbol">:comments</span>, <span class="symbol">shallow:</span> <span class="literal">true</span>, <span class="symbol">only:</span> [<span class="symbol">:new</span>, <span class="symbol">:create</span>, <span class="symbol">:destroy</span>]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p> 這邊我只需要三個路徑，並且destroy只需要comment的id就可以抓到它進行刪除，所以使用shallow: true可以遮蔽掉前面的project，避免太冗長的網址 (完整說明可以參考官方文件<a target="_blank" rel="noopener" href="https://guides.rubyonrails.org/routing.html#shallow-nesting">https://guides.rubyonrails.org/routing.html#shallow-nesting</a>）</p>
+</li>
+<li><p>在project的show頁面放入comment的form</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># view/projects/show.html.erb</span></span><br><span class="line">&lt;% <span class="keyword">if</span> user_signed_in? %&gt;</span><br><span class="line">  &lt;%= form_with <span class="symbol">model:</span> Comment.new, <span class="symbol">url:</span> project_comments_path(<span class="variable">@project</span>) <span class="keyword">do</span> <span class="params">|f|</span> %&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;%= f.text_area <span class="symbol">:content</span>, <span class="symbol">placeholder:</span> <span class="string">&#x27;請留言&#x27;</span> %&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;%= f.submit &#x27;送出&#x27; %&gt;</span></span><br><span class="line"><span class="regexp">  &lt;% end %&gt;</span></span><br><span class="line"><span class="regexp">&lt;% end %&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>建立comment的controller，然後新增一個create的方法</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># app/controllers/comments_controller.rb</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create</span></span></span><br><span class="line">	<span class="variable">@project</span> = Project.find(params[<span class="symbol">:project_id</span>])</span><br><span class="line">  <span class="variable">@comment</span> = current_user.comments.new(comment_params)</span><br><span class="line">  <span class="variable">@comment</span>.project = @project</span><br><span class="line">   <span class="keyword">if</span> <span class="variable">@comment</span>.save</span><br><span class="line">     redirect_to project_path(<span class="variable">@project</span>)</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">private</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">comment_params</span></span></span><br><span class="line">  params.<span class="keyword">require</span>(<span class="symbol">:comment</span>).permit(<span class="symbol">:content</span>, <span class="symbol">:parent_id</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p> <img src="/2021/01/22/%E7%95%99%E8%A8%80%E5%8F%8A%E5%9B%9E%E8%A6%86%E5%8A%9F%E8%83%BD-self-join/11.png"></p>
+<p> 這時候如果我們在頁面上新增留言就可以順利create，但除非我們去看log紀錄，否則在畫面上還看不出來，因為我們根本還沒把它渲染出來。</p>
+</li>
+<li><p>在project的show頁面把comment渲染出來。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= render <span class="variable">@project</span>.comments, <span class="symbol">comment:</span> <span class="variable">@comment</span> %&gt;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#views/comments/_comment.html.erb</span></span><br><span class="line">&lt;div&gt;</span><br><span class="line">  [&lt;%= comment.user.name %&gt;]</span><br><span class="line">  &lt;%= comment.created_at.strftime(<span class="string">&quot;%Y/%m/%d&quot;</span>) %&gt;</span><br><span class="line">  &lt;%= comment.content %&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<p> 如果覺得comment建立時間的預設格式太冗長，可以用strftime改成自己喜歡的格式。<a target="_blank" rel="noopener" href="https://apidock.com/ruby/DateTime/strftime">https://apidock.com/ruby/DateTime/strftime</a></p>
+</li>
+</ol>
+<h3 id="Reply"><a href="#Reply" class="headerlink" title="Reply"></a>Reply</h3><p>我們並不會建立reply的model，而是透過self-join的方法利用我們一開始在comment的model裡面建立的parent_id欄位來關聯他們，基本上reply就是comment。</p>
+<p><a target="_blank" rel="noopener" href="https://guides.rubyonrails.org/association_basics.html#self-joins">https://guides.rubyonrails.org/association_basics.html#self-joins</a></p>
+<ol>
+<li><p>首先我們先把comment跟reply的關係設定好</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Comment</span> &lt; ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:project</span></span><br><span class="line">  belongs_to <span class="symbol">:user</span></span><br><span class="line">  has_many <span class="symbol">:replies</span>, <span class="symbol">class_name:</span> <span class="string">&#x27;Comment&#x27;</span>, <span class="symbol">foreign_key:</span> <span class="symbol">:parent_id</span>, <span class="symbol">dependent:</span> <span class="symbol">:destroy</span></span><br><span class="line"></span><br><span class="line">  validates <span class="symbol">:content</span>, <span class="symbol">presence:</span> <span class="symbol">:true</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+<li><p>接下來就讓我們來建立reply的form吧，如果comment有任何reply就把它們印出來。這邊使用remote:true代表我們要用ajax來執行非同步處理。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#views/comments/_comment.html.erb</span></span><br><span class="line">&lt;%= link_to <span class="string">&#x27;回覆&#x27;</span>, new_project_comment_path(<span class="variable">@project</span>, <span class="symbol">parent_id:</span> comment.id), <span class="symbol">remote:</span> <span class="literal">true</span> %&gt;</span><br><span class="line"></span><br><span class="line">&lt;% <span class="keyword">if</span> comment.replies.any? %&gt;</span><br><span class="line">  &lt;% comment.replies.each <span class="keyword">do</span> <span class="params">|reply|</span> %&gt; </span><br><span class="line">    &lt;%= render <span class="string">&#x27;comments/reply&#x27;</span>, <span class="symbol">reply:</span> reply %&gt;</span><br><span class="line">  &lt;% <span class="keyword">end</span> %&gt;</span><br><span class="line">&lt;% <span class="keyword">end</span> %&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>建立_reply頁面</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/comments/_reply.html.erb</span></span><br><span class="line">&lt;div  class=&#x27;ml-5&#x27;&gt;</span><br><span class="line">  [&lt;%= reply.user.name %&gt;]</span><br><span class="line">  &lt;%= reply.created_at.strftime(<span class="string">&quot;%Y/%m/%d&quot;</span>) %&gt;</span><br><span class="line">  &lt;%= reply.content %&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>建立reply的form，這邊也放了一個parent_id的隱藏欄位，透過comment的new action來把它填入表單</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_with <span class="symbol">model:</span> [<span class="variable">@project</span>, <span class="variable">@comment</span>] <span class="keyword">do</span> <span class="params">|f|</span> %&gt;</span><br><span class="line">  &lt;%= f.hidden_field <span class="symbol">:parent_id</span> %&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;%= f.text_area <span class="symbol">:content</span>, <span class="symbol">placeholder:</span> <span class="string">&#x27;請回覆&#x27;</span>, <span class="class"><span class="keyword">class</span>:&#x27;<span class="title">border</span>-2&#x27; %&gt;</span></span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  &lt;%= f.submit &#x27;送出回覆&#x27; %&gt;</span></span><br><span class="line"><span class="regexp">  &lt;%= link_to &#x27;取消&#x27;, project_path(@project) %&gt;</span></span><br><span class="line"><span class="regexp">&lt;% end %&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>生成一個new方法，填入parent_id到隱藏欄位裡面</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#comments_controller.eb</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new</span></span></span><br><span class="line">	<span class="variable">@project</span> = Project.find(params[<span class="symbol">:project_id</span>])</span><br><span class="line">  <span class="variable">@comment</span> = current_user.comments.new(<span class="symbol">parent_id:</span> params[<span class="symbol">:parent_id</span>])</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+<li><p>接下來我們要使用ajax方式生成回覆的資料，先建一個空的div容器，待會塞資料給它。這邊的動態id是為了識別每一個form。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#app/views/_comment.html.erb</span></span><br><span class="line">&lt;div id=<span class="string">&quot;reply-form-&lt;%= comment.id %&gt;&quot;</span>&gt;&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>新建一個new.js.erb的檔案，當點擊新增回覆的按鈕時會找到它，把reply_form的資料渲染在這個位置。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#comments/new.js.erb</span></span><br><span class="line">document.querySelector(<span class="string">&quot;#reply-form-&lt;%= @comment.parent_id %&gt;&quot;</span>).innerHTML = (<span class="string">&quot;&lt;%= j render &#x27;reply_form&#x27;, comment: @comment %&gt;&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>最後填完回覆內容按下送出，就可以把這筆資料存進資料庫了。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ruby-on-Rails/" rel="tag"># Ruby on Rails</a>
+              <a href="/tags/%E5%8B%9F%E8%B3%87%E7%B6%B2%E7%AB%99project/" rel="tag"># 募資網站project</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/09/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day11/" rel="prev" title="codewar-找到中間值的index">
+      <i class="fa fa-chevron-left"></i> codewar-找到中間值的index
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Comment"><span class="nav-number">1.</span> <span class="nav-text">Comment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reply"><span class="nav-number">2.</span> <span class="nav-text">Reply</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/prodigy7748" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;prodigy7748" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-baby"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Powered by Phil</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

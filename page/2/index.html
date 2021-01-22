@@ -184,6 +184,77 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/01/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/01/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day3/" class="post-title-link" itemprop="url">codewar-取字串中間的文字</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-01 22:12:11" itemprop="dateCreated datePublished" datetime="2021-01-01T22:12:11+08:00">2021-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-22 23:33:44" itemprop="dateModified" datetime="2021-01-22T23:33:44+08:00">2021-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="取一段字串中間的文字"><a href="#取一段字串中間的文字" class="headerlink" title="取一段字串中間的文字"></a>取一段字串中間的文字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Kata.getMiddle(&quot;test&quot;) should return &quot;es&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;testing&quot;) should return &quot;t&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;middle&quot;) should return &quot;dd&quot;</span><br><span class="line"></span><br><span class="line">Kata.getMiddle(&quot;A&quot;) should return &quot;A&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值"><a href="#解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值" class="headerlink" title="解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值"></a>解題思考：從題目上看起來，要將每個字串分成單數或偶數，再針對個別去計算要取的index值</h3><p>1.如果是單數，就將字串長度除以2再四捨五入，取到中間數</p>
+<p>2.如果是偶數，將字串長度除以2再減掉1，加上字串長度除以2</p>
+<p>3.雖然方法笨笨的，但有效XD</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_middle</span><span class="params">(s)</span></span></span><br><span class="line">  arr = s.split(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  <span class="keyword">if</span> arr.length.odd?</span><br><span class="line">    arr[((arr.length) / <span class="number">2</span>).round]</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    arr[(arr.length) / <span class="number">2</span> - <span class="number">1</span>] + arr[(arr.length) / <span class="number">2</span> ]</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>解題完之後看到很聰明的作法，一行就搞定！在這裡也跟大家分享～</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_middle</span><span class="params">(s)</span></span></span><br><span class="line">  s[(s.size-<span class="number">1</span>)/<span class="number">2</span>..s.size/<span class="number">2</span>]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="https://phillee.cc/2020/12/31/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -875,108 +946,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2020/11/28/Ruby%20on%20Rails%20%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Module/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/28/Ruby%20on%20Rails%20%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-Module/" class="post-title-link" itemprop="url">Ruby on Rails學習筆記-Module</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-28 21:59:20" itemprop="dateCreated datePublished" datetime="2020-11-28T21:59:20+08:00">2020-11-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-22 23:37:40" itemprop="dateModified" datetime="2021-01-22T23:37:40+08:00">2021-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>有時有多個類別都需要使用同個方法，這時候可以定義一個模組，讓每個類別可以引入取用。</p>
-<h2 id="模組與繼承的不同之處："><a href="#模組與繼承的不同之處：" class="headerlink" title="模組與繼承的不同之處："></a>模組與繼承的不同之處：</h2><ul>
-<li>模組沒有繼承的功能：</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Flyable</span> &lt; other <span class="title">module</span></span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#無法繼承</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>模組不能被實體化：</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Flyable</span></span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Dog = Flyable.new </span><br><span class="line"></span><br><span class="line"><span class="comment">#undefined method `new&#x27; for Flyable:Module (NoMethodErro</span></span><br></pre></td></tr></table></figure>
-<h2 id="模組引入有兩種寫法："><a href="#模組引入有兩種寫法：" class="headerlink" title="模組引入有兩種寫法："></a>模組引入有兩種寫法：</h2><ol>
-<li>在類別內include模組，此類別製造的實體可使用模組的方法（實體方法）</li>
-</ol>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Invisible</span></span></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">woolala</span></span></span><br><span class="line">  puts <span class="string">&quot;nobody can see <span class="subst">#&#123;<span class="variable">@name</span>&#125;</span> now!&quot;</span></span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span></span></span><br><span class="line">  <span class="keyword">include</span> Invisible</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(name)</span></span></span><br><span class="line">    <span class="variable">@name</span> = name</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Phil = Human.new(<span class="string">&quot;Phil&quot;</span>)</span><br><span class="line">Phil.woolala</span><br><span class="line"></span><br><span class="line"><span class="comment">#印出 nobody can see Phil now!</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>  在類別內extend模組，此類別可直接使用方法（類別方法），但其製造的實體不可使用此方法</li>
-</ol>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Flyable</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">fly</span></span></span><br><span class="line">    puts <span class="string">&#x27;I can Fly!&#x27;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span></span></span><br><span class="line">	extend Flyable</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Cat.fly</span><br><span class="line"><span class="comment">#印出 I can Fly!</span></span><br><span class="line"></span><br><span class="line">Phil = Cat.new</span><br><span class="line">Phil.fly</span><br><span class="line"><span class="comment">#undefined method `fly&#x27; for #&lt;Cat:0x0000563c17581b38&gt; (NoMethodError)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="如有重複的類別名稱，可用不同模組區隔，製作實體時，需用”-“來鎖定欲呼叫的類別。"><a href="#如有重複的類別名稱，可用不同模組區隔，製作實體時，需用”-“來鎖定欲呼叫的類別。" class="headerlink" title="如有重複的類別名稱，可用不同模組區隔，製作實體時，需用” :: “來鎖定欲呼叫的類別。"></a>如有重複的類別名稱，可用不同模組區隔，製作實體時，需用” :: “來鎖定欲呼叫的類別。</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">A</span></span></span><br><span class="line">	<span class="class"><span class="keyword">module</span> <span class="title">Z</span></span></span><br><span class="line">		<span class="class"><span class="keyword">class</span> <span class="title">Dog</span></span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">B</span></span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Dog</span></span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Ryan = A::Z::Dog.new <span class="comment">#必須一層層呼叫到類別</span></span><br><span class="line">Will = B::Dog.new</span><br></pre></td></tr></table></figure>
-<p>冒號的位置在Ruby代表不同意思</p>
-<ul>
-<li>冒號在左邊，代表符號</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">has_name <span class="symbol">:name</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>冒號在右邊，代表hash裡面的key</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="symbol">name:</span> <span class="string">&quot;Phil&quot;</span>, <span class="symbol">age:</span> <span class="number">32</span>&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>冒號在中間，前者是key，後者是符號，中間用空格隔開</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="symbol">direction:</span> <span class="symbol">:up</span>, <span class="symbol">power:</span> <span class="number">100</span>&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>冒號在中間，而且沒有空格，代表呼叫模組裡面的類別</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> &lt; ActiveRecord::Base <span class="comment">#User繼承ActiveRecord模組裡面的Base類別</span></span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1042,7 +1015,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
