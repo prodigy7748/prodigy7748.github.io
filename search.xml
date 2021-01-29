@@ -315,10 +315,9 @@
       </tags>
   </entry>
   <entry>
-    <title>挑戰連續刷codewar30天-day1</title>
+    <title>codewar-取最大值與最小值</title>
     <url>/2020/12/30/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7%E9%A1%8C30%E5%A4%A9-day1/</url>
-    <content><![CDATA[<p>雖然今年沒能搭上鐵人賽的列車，但還是想給過去惰性滿滿的自己一些挑戰，從今天開始連續刷30天的codewar！！</p>
-<h3 id="題目說明：取最大值與最小值"><a href="#題目說明：取最大值與最小值" class="headerlink" title="題目說明：取最大值與最小值"></a>題目說明：取最大值與最小值</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Test.assert_equals(high_and_low(<span class="string">&quot;4 5 29 54 4 0 -214 542 -64 1 -3 6 -6&quot;</span>), <span class="string">&quot;542 -214&quot;</span>)</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h3 id="題目說明：取最大值與最小值"><a href="#題目說明：取最大值與最小值" class="headerlink" title="題目說明：取最大值與最小值"></a>題目說明：取最大值與最小值</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">Test.assert_equals(high_and_low(<span class="string">&quot;4 5 29 54 4 0 -214 542 -64 1 -3 6 -6&quot;</span>), <span class="string">&quot;542 -214&quot;</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="起始內容："><a href="#起始內容：" class="headerlink" title="起始內容："></a>起始內容：</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">high_and_low</span><span class="params">(numbers)</span></span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p>解題步驟：</p>
 <p>1.把字串裡的每個字用split分開，並且得到新的陣列</p>
