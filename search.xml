@@ -514,4 +514,48 @@
         <tag>募資網站project</tag>
       </tags>
   </entry>
+  <entry>
+    <title>使用Action_text編輯器上傳圖檔到_AWS_S3</title>
+    <url>/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/</url>
+    <content><![CDATA[<p>Action text 是rails 6之後新增加的編輯器功能，它整合了trix編輯器的內嵌圖片、comment、quote等功能，非常容易安裝使用，以下跟大家分享我的安裝及上傳內嵌圖片到s3的經驗。</p>
+<h2 id="安裝action-text-及active-storage"><a href="#安裝action-text-及active-storage" class="headerlink" title="安裝action text 及active storage"></a>安裝action text 及active storage</h2><ol>
+<li><p>首先按照rails官網指示安裝<a href="https://guides.rubyonrails.org/action_text_overview.html">action text</a></p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">rails <span class="symbol">action_text:</span>install</span><br></pre></td></tr></table></figure></li>
+<li><p>在application.js引入trix跟action text</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="keyword">require</span>(<span class="string">&quot;trix&quot;</span>)</span><br><span class="line"><span class="keyword">require</span>(<span class="string">&quot;@rails/actiontext&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>因為action text需搭配<a href="https://guides.rubyonrails.org/active_storage_overview.html">active storage</a>來夾帶附件及圖片，所以一併安裝，輸入以下指令會建立兩個table(active_storage_blobs and active_storage_attachments)。</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">rails <span class="symbol">active_storage:</span>install</span><br><span class="line">rails <span class="symbol">db:</span>migrate</span><br></pre></td></tr></table></figure></li>
+<li><p>在安裝action text的同時，也同時新增了一個actiontext.scss，可以針對編輯器的css做更改，記得把它打包到stylesheet的pack裡面。</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="variable">@import</span> <span class="string">&quot;./actiontext.scss&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="開始使用action-text"><a href="#開始使用action-text" class="headerlink" title="開始使用action text"></a>開始使用action text</h2></li>
+<li><p>在你要使用編輯器的model及欄位做設定。</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#project.rb</span></span><br><span class="line">has_rich_text <span class="symbol">:content</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在view上把編輯器渲染出來。</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">&lt;%= form.rich_text_area <span class="symbol">:content</span> %&gt;</span><br></pre></td></tr></table></figure>
+<p> <img src="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/1.png"></p>
+</li>
+<li><p>如果是在development階段開發，active storage預設會走local的儲存方式(可見development的設定)，附件都會存在本機，所以現在已經可以開始進行編輯及內嵌圖片囉！</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#development.rb</span></span><br><span class="line">config.active_storage.service = <span class="symbol">:local</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#storage.yml</span></span><br><span class="line"><span class="symbol">test:</span></span><br><span class="line">  <span class="symbol">service:</span> Disk</span><br><span class="line">  <span class="symbol">root:</span> &lt;%= Rails.root.join(<span class="string">&quot;tmp/storage&quot;</span>) %&gt;</span><br><span class="line"></span><br><span class="line"><span class="symbol">local:</span></span><br><span class="line">  <span class="symbol">service:</span> Disk</span><br><span class="line">  <span class="symbol">root:</span> &lt;%= Rails.root.join(<span class="string">&quot;storage&quot;</span>) %&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>預設的編輯器在上傳圖片時，會有一組caption，如果不需要的話，可以在_blob.html裡面把它拿掉。</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">&lt;figure class=&quot;attachment attachment--&lt;%= blob.representable? ? &quot;preview&quot; : &quot;file&quot; %&gt; attachment--&lt;%= blob.filename.extension %&gt;&quot;&gt;</span><br><span class="line">  &lt;% <span class="keyword">if</span> blob.representable? %&gt;</span><br><span class="line">    &lt;%= image_tag blob.representation(<span class="symbol">resize_to_limit:</span> local_assigns[<span class="symbol">:in_gallery</span>] ? [ <span class="number">800</span>, <span class="number">600</span> ] : [ <span class="number">1024</span>, <span class="number">768</span> ]) %&gt;</span><br><span class="line">  &lt;% <span class="keyword">end</span> %&gt;</span><br><span class="line"></span><br><span class="line">	~~&lt;figcaption class=&quot;attachment__caption&quot;&gt;</span><br><span class="line">    &lt;% <span class="keyword">if</span> caption = blob.try(<span class="symbol">:caption</span>) %&gt;</span><br><span class="line">      &lt;%= caption %&gt;</span><br><span class="line">    &lt;% <span class="keyword">else</span> %&gt;</span><br><span class="line">      &lt;span class=&quot;attachment__name&quot;&gt;&lt;%= blob.filename %&gt;&lt;/span&gt;</span><br><span class="line">      &lt;span class=&quot;attachment__size&quot;&gt;&lt;%= number_to_human_size blob.byte_size %&gt;&lt;/span&gt;</span><br><span class="line">    &lt;% <span class="keyword">end</span> %&gt;</span><br><span class="line">  &lt;<span class="regexp">/figcaption&gt;~~</span></span><br><span class="line"><span class="regexp">&lt;/figure</span>&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="在production-環境時上傳內嵌圖片到S3"><a href="#在production-環境時上傳內嵌圖片到S3" class="headerlink" title="在production 環境時上傳內嵌圖片到S3"></a>在production 環境時上傳內嵌圖片到S3</h2></li>
+<li><p>在AWS S3註冊一個帳號，接著申請一個bucket及credential_key，取得它的access_key跟secret_access_key之後，在storage.yml裡面新增amazon的儲存方式，把資料填進去（這裏我使用figaro把敏感資料存成環境變數使用）。</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#storage.yml</span></span><br><span class="line"><span class="symbol">amazon:</span></span><br><span class="line">  <span class="symbol">service:</span> S3</span><br><span class="line">  <span class="symbol">access_key_id:</span> &lt;%= ENV[<span class="string">&quot;aws_access_key_id&quot;</span>] %&gt;</span><br><span class="line">  <span class="symbol">secret_access_key:</span> &lt;%= ENV[<span class="string">&quot;aws_secret_access_key&quot;</span>] %&gt;</span><br><span class="line">  <span class="symbol">region:</span> <span class="string">&quot;your region&quot;</span></span><br><span class="line">  <span class="symbol">bucket:</span> <span class="string">&quot;your bucket name&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定active storage在production環境時，走amazon的儲存方式。</p>
+ <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="comment">#production.rb</span></span><br><span class="line">config.active_storage.service = <span class="symbol">:amazon</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在S3的bucket設定跨來源資源分享(CORS)，授權我們domain跟AWS資料交換，</p>
+<p> <img src="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/2.png"></p>
+<p> <img src="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/3.png"></p>
+</li>
+<li><p>如此一來就可以上傳圖片到S3囉！</p>
+<p> <img src="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/4.png"></p>
+</li>
+</ol>
+<p>參考資料：<a href="https://pragmaticstudio.com/tutorials/using-active-storage-in-rails">https://pragmaticstudio.com/tutorials/using-active-storage-in-rails</a></p>
+]]></content>
+      <tags>
+        <tag>Ruby on Rails</tag>
+        <tag>S3</tag>
+      </tags>
+  </entry>
 </search>

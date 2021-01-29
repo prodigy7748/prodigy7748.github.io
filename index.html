@@ -184,6 +184,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/" class="post-title-link" itemprop="url">使用Action_text編輯器上傳圖檔到_AWS_S3</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-29 16:57:09 / Modified: 17:05:12" itemprop="dateCreated datePublished" datetime="2021-01-29T16:57:09+08:00">2021-01-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Action text 是rails 6之後新增加的編輯器功能，它整合了trix編輯器的內嵌圖片、comment、quote等功能，非常容易安裝使用，以下跟大家分享我的安裝及上傳內嵌圖片到s3的經驗。</p>
+<h2 id="安裝action-text-及active-storage"><a href="#安裝action-text-及active-storage" class="headerlink" title="安裝action text 及active storage"></a>安裝action text 及active storage</h2><ol>
+<li><p>首先按照rails官網指示安裝<a target="_blank" rel="noopener" href="https://guides.rubyonrails.org/action_text_overview.html">action text</a></p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rails <span class="symbol">action_text:</span>install</span><br></pre></td></tr></table></figure></li>
+<li><p>在application.js引入trix跟action text</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span>(<span class="string">&quot;trix&quot;</span>)</span><br><span class="line"><span class="keyword">require</span>(<span class="string">&quot;@rails/actiontext&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>因為action text需搭配<a target="_blank" rel="noopener" href="https://guides.rubyonrails.org/active_storage_overview.html">active storage</a>來夾帶附件及圖片，所以一併安裝，輸入以下指令會建立兩個table(active_storage_blobs and active_storage_attachments)。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rails <span class="symbol">active_storage:</span>install</span><br><span class="line">rails <span class="symbol">db:</span>migrate</span><br></pre></td></tr></table></figure></li>
+<li><p>在安裝action text的同時，也同時新增了一個actiontext.scss，可以針對編輯器的css做更改，記得把它打包到stylesheet的pack裡面。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@import</span> <span class="string">&quot;./actiontext.scss&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="開始使用action-text"><a href="#開始使用action-text" class="headerlink" title="開始使用action text"></a>開始使用action text</h2></li>
+<li><p>在你要使用編輯器的model及欄位做設定。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#project.rb</span></span><br><span class="line">has_rich_text <span class="symbol">:content</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在view上把編輯器渲染出來。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form.rich_text_area <span class="symbol">:content</span> %&gt;</span><br></pre></td></tr></table></figure>
+<p> <img src="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/1.png"></p>
+</li>
+<li><p>如果是在development階段開發，active storage預設會走local的儲存方式(可見development的設定)，附件都會存在本機，所以現在已經可以開始進行編輯及內嵌圖片囉！</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#development.rb</span></span><br><span class="line">config.active_storage.service = <span class="symbol">:local</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#storage.yml</span></span><br><span class="line"><span class="symbol">test:</span></span><br><span class="line">  <span class="symbol">service:</span> Disk</span><br><span class="line">  <span class="symbol">root:</span> &lt;%= Rails.root.join(<span class="string">&quot;tmp/storage&quot;</span>) %&gt;</span><br><span class="line"></span><br><span class="line"><span class="symbol">local:</span></span><br><span class="line">  <span class="symbol">service:</span> Disk</span><br><span class="line">  <span class="symbol">root:</span> &lt;%= Rails.root.join(<span class="string">&quot;storage&quot;</span>) %&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>預設的編輯器在上傳圖片時，會有一組caption，如果不需要的話，可以在_blob.html裡面把它拿掉。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;figure class=&quot;attachment attachment--&lt;%= blob.representable? ? &quot;preview&quot; : &quot;file&quot; %&gt; attachment--&lt;%= blob.filename.extension %&gt;&quot;&gt;</span><br><span class="line">  &lt;% <span class="keyword">if</span> blob.representable? %&gt;</span><br><span class="line">    &lt;%= image_tag blob.representation(<span class="symbol">resize_to_limit:</span> local_assigns[<span class="symbol">:in_gallery</span>] ? [ <span class="number">800</span>, <span class="number">600</span> ] : [ <span class="number">1024</span>, <span class="number">768</span> ]) %&gt;</span><br><span class="line">  &lt;% <span class="keyword">end</span> %&gt;</span><br><span class="line"></span><br><span class="line">	~~&lt;figcaption class=&quot;attachment__caption&quot;&gt;</span><br><span class="line">    &lt;% <span class="keyword">if</span> caption = blob.try(<span class="symbol">:caption</span>) %&gt;</span><br><span class="line">      &lt;%= caption %&gt;</span><br><span class="line">    &lt;% <span class="keyword">else</span> %&gt;</span><br><span class="line">      &lt;span class=&quot;attachment__name&quot;&gt;&lt;%= blob.filename %&gt;&lt;/span&gt;</span><br><span class="line">      &lt;span class=&quot;attachment__size&quot;&gt;&lt;%= number_to_human_size blob.byte_size %&gt;&lt;/span&gt;</span><br><span class="line">    &lt;% <span class="keyword">end</span> %&gt;</span><br><span class="line">  &lt;<span class="regexp">/figcaption&gt;~~</span></span><br><span class="line"><span class="regexp">&lt;/figure</span>&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="在production-環境時上傳內嵌圖片到S3"><a href="#在production-環境時上傳內嵌圖片到S3" class="headerlink" title="在production 環境時上傳內嵌圖片到S3"></a>在production 環境時上傳內嵌圖片到S3</h2></li>
+<li><p>在AWS S3註冊一個帳號，接著申請一個bucket及credential_key，取得它的access_key跟secret_access_key之後，在storage.yml裡面新增amazon的儲存方式，把資料填進去（這裏我使用figaro把敏感資料存成環境變數使用）。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#storage.yml</span></span><br><span class="line"><span class="symbol">amazon:</span></span><br><span class="line">  <span class="symbol">service:</span> S3</span><br><span class="line">  <span class="symbol">access_key_id:</span> &lt;%= ENV[<span class="string">&quot;aws_access_key_id&quot;</span>] %&gt;</span><br><span class="line">  <span class="symbol">secret_access_key:</span> &lt;%= ENV[<span class="string">&quot;aws_secret_access_key&quot;</span>] %&gt;</span><br><span class="line">  <span class="symbol">region:</span> <span class="string">&quot;your region&quot;</span></span><br><span class="line">  <span class="symbol">bucket:</span> <span class="string">&quot;your bucket name&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定active storage在production環境時，走amazon的儲存方式。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#production.rb</span></span><br><span class="line">config.active_storage.service = <span class="symbol">:amazon</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在S3的bucket設定跨來源資源分享(CORS)，授權我們domain跟AWS資料交換，</p>
+<p> <img src="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/2.png"></p>
+<p> <img src="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/3.png"></p>
+</li>
+<li><p>如此一來就可以上傳圖片到S3囉！</p>
+<p> <img src="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/4.png"></p>
+</li>
+</ol>
+<p>參考資料：<a target="_blank" rel="noopener" href="https://pragmaticstudio.com/tutorials/using-active-storage-in-rails">https://pragmaticstudio.com/tutorials/using-active-storage-in-rails</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/22/%E7%95%99%E8%A8%80%E5%8F%8A%E5%9B%9E%E8%A6%86%E5%8A%9F%E8%83%BD-self-join/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -896,84 +989,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/02/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/02/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day4/" class="post-title-link" itemprop="url">codewar-map.with_index</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-02 23:44:59" itemprop="dateCreated datePublished" datetime="2021-01-02T23:44:59+08:00">2021-01-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-22 23:37:26" itemprop="dateModified" datetime="2021-01-22T23:37:26+08:00">2021-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="說明：這次沒有說明，就是按照以下邏輯去完成題目。"><a href="#說明：這次沒有說明，就是按照以下邏輯去完成題目。" class="headerlink" title="說明：這次沒有說明，就是按照以下邏輯去完成題目。"></a>說明：這次沒有說明，就是按照以下邏輯去完成題目。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">accum(&quot;abcd&quot;) -&gt; &quot;A-Bb-Ccc-Dddd&quot;</span><br><span class="line">accum(&quot;RqaEzty&quot;) -&gt; &quot;R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy&quot;</span><br><span class="line">accum(&quot;cwAt&quot;) -&gt; &quot;C-Ww-Aaa-Tttt&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="題目："><a href="#題目：" class="headerlink" title="題目："></a>題目：</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Test.describe(<span class="string">&quot;accum&quot;</span>) <span class="keyword">do</span></span><br><span class="line">    Test.it(<span class="string">&quot;Basic tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">    	  Test.assert_equals(accum(<span class="string">&quot;ZpglnRxqenU&quot;</span>), <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;NyffsGeyylB&quot;</span>), <span class="string">&quot;N-Yy-Fff-Ffff-Sssss-Gggggg-Eeeeeee-Yyyyyyyy-Yyyyyyyyy-Llllllllll-Bbbbbbbbbbb&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;MjtkuBovqrU&quot;</span>), <span class="string">&quot;M-Jj-Ttt-Kkkk-Uuuuu-Bbbbbb-Ooooooo-Vvvvvvvv-Qqqqqqqqq-Rrrrrrrrrr-Uuuuuuuuuuu&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;EvidjUnokmM&quot;</span>), <span class="string">&quot;E-Vv-Iii-Dddd-Jjjjj-Uuuuuu-Nnnnnnn-Oooooooo-Kkkkkkkkk-Mmmmmmmmmm-Mmmmmmmmmmm&quot;</span>)</span><br><span class="line">        Test.assert_equals(accum(<span class="string">&quot;HbideVbxncC&quot;</span>), <span class="string">&quot;H-Bb-Iii-Dddd-Eeeee-Vvvvvv-Bbbbbbb-Xxxxxxxx-Nnnnnnnnn-Cccccccccc-Ccccccccccc&quot;</span>)</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="解題："><a href="#解題：" class="headerlink" title="解題："></a>解題：</h3><ol>
-<li><p>先將題目的字串全部統一換成小寫</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> <span class="string">&quot;zpglnrxqenu&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li><p>用chars把每個字拆開，同時變成一個陣列</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;z&quot;</span>, <span class="string">&quot;p&quot;</span>, <span class="string">&quot;g&quot;</span>, <span class="string">&quot;l&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;r&quot;</span>, <span class="string">&quot;x&quot;</span>, <span class="string">&quot;q&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;u&quot;</span>]</span><br></pre></td></tr></table></figure></li>
-<li><p>用map.with_index方法對陣列每一個字元做事情，這邊用with_index可以抓到每個字元的索引值，然後讓他們倍數複製</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;z&quot;</span>, <span class="string">&quot;pp&quot;</span>, <span class="string">&quot;ggg&quot;</span>, <span class="string">&quot;llll&quot;</span>, <span class="string">&quot;nnnnn&quot;</span>, <span class="string">&quot;rrrrrr&quot;</span>, <span class="string">&quot;xxxxxxx&quot;</span>, <span class="string">&quot;qqqqqqqq&quot;</span>, <span class="string">&quot;eeeeeeeee&quot;</span>, <span class="string">&quot;nnnnnnnnnn&quot;</span>, <span class="string">&quot;uuuuuuuuuuu&quot;</span>]</span><br></pre></td></tr></table></figure></li>
-<li><p>用capitalize讓每個元素的首字大寫</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Expected:</span> <span class="string">&quot;Z-Pp-Ggg-Llll-Nnnnn-Rrrrrr-Xxxxxxx-Qqqqqqqq-Eeeeeeeee-Nnnnnnnnnn-Uuuuuuuuuuu&quot;</span>, </span><br><span class="line">instead <span class="symbol">got:</span> [<span class="string">&quot;Z&quot;</span>, <span class="string">&quot;Pp&quot;</span>, <span class="string">&quot;Ggg&quot;</span>, <span class="string">&quot;Llll&quot;</span>, <span class="string">&quot;Nnnnn&quot;</span>, <span class="string">&quot;Rrrrrr&quot;</span>, <span class="string">&quot;Xxxxxxx&quot;</span>, <span class="string">&quot;Qqqqqqqq&quot;</span>, <span class="string">&quot;Eeeeeeeee&quot;</span>, <span class="string">&quot;Nnnnnnnnnn&quot;</span>, <span class="string">&quot;Uuuuuuuuuuu&quot;</span>]</span><br></pre></td></tr></table></figure></li>
-<li><p>最後用join(‘-‘)把所有元素用’-‘符號穿在一起變成字串，得到最後結果</p>
- <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">accum</span><span class="params">(s)</span></span></span><br><span class="line">	s.downcase.chars.map.with_index &#123;<span class="params">|x, index|</span> (x * (index + <span class="number">1</span>)).capitalize&#125;.join(<span class="string">&#x27;-&#x27;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1043,14 +1058,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
