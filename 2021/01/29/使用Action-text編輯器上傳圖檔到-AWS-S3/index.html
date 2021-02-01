@@ -23,7 +23,7 @@
 
   <meta name="description" content="Action text 是rails 6之後新增加的編輯器功能，它整合了trix編輯器的內嵌圖片、comment、quote等功能，非常容易安裝使用，以下跟大家分享我的安裝及上傳內嵌圖片到s3的經驗。 安裝action text 及active storage 首先按照rails官網指示安裝action text  1rails action_text:install 在application.j">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Action_text編輯器上傳圖檔到_AWS_S3">
+<meta property="og:title" content="將Action_text編輯器的圖檔上傳到_AWS_S3">
 <meta property="og:url" content="https://phillee.cc/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/index.html">
 <meta property="og:site_name" content="Phil&#39;s blog">
 <meta property="og:description" content="Action text 是rails 6之後新增加的編輯器功能，它整合了trix編輯器的內嵌圖片、comment、quote等功能，非常容易安裝使用，以下跟大家分享我的安裝及上傳內嵌圖片到s3的經驗。 安裝action text 及active storage 首先按照rails官網指示安裝action text  1rails action_text:install 在application.j">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://phillee.cc/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/3.png">
 <meta property="og:image" content="https://phillee.cc/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/4.png">
 <meta property="article:published_time" content="2021-01-29T08:57:09.000Z">
-<meta property="article:modified_time" content="2021-01-29T09:05:12.464Z">
+<meta property="article:modified_time" content="2021-01-30T02:09:05.093Z">
 <meta property="article:author" content="Phil lee">
 <meta property="article:tag" content="Ruby on Rails">
 <meta property="article:tag" content="S3">
@@ -53,7 +53,7 @@
   };
 </script>
 
-  <title>使用Action_text編輯器上傳圖檔到_AWS_S3 | Phil's blog</title>
+  <title>將Action_text編輯器的圖檔上傳到_AWS_S3 | Phil's blog</title>
   
 
 
@@ -209,7 +209,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          使用Action_text編輯器上傳圖檔到_AWS_S3
+          將Action_text編輯器的圖檔上傳到_AWS_S3
         </h1>
 
         <div class="post-meta">
@@ -218,10 +218,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-01-29 16:57:09 / Modified: 17:05:12" itemprop="dateCreated datePublished" datetime="2021-01-29T16:57:09+08:00">2021-01-29</time>
+              <time title="Created: 2021-01-29 16:57:09" itemprop="dateCreated datePublished" datetime="2021-01-29T16:57:09+08:00">2021-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-30 10:09:05" itemprop="dateModified" datetime="2021-01-30T10:09:05+08:00">2021-01-30</time>
+              </span>
 
           
 
@@ -291,7 +297,10 @@
     <a href="/2021/01/22/%E7%95%99%E8%A8%80%E5%8F%8A%E5%9B%9E%E8%A6%86%E5%8A%9F%E8%83%BD-self-join/" rel="prev" title="留言及回覆功能-self-join">
       <i class="fa fa-chevron-left"></i> 留言及回覆功能-self-join
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/01/%E9%A1%9E%E5%88%A5%E8%88%87%E5%AF%A6%E9%AB%94%E6%96%B9%E6%B3%95/" rel="next" title="類別與實體方法">
+      類別與實體方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -364,7 +373,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

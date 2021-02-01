@@ -184,6 +184,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/02/01/%E9%A1%9E%E5%88%A5%E8%88%87%E5%AF%A6%E9%AB%94%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/01/%E9%A1%9E%E5%88%A5%E8%88%87%E5%AF%A6%E9%AB%94%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">類別與實體方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-02-01 22:57:57 / Modified: 22:59:20" itemprop="dateCreated datePublished" datetime="2021-02-01T22:57:57+08:00">2021-02-01</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="類別-Class-與實體-Instance"><a href="#類別-Class-與實體-Instance" class="headerlink" title="類別(Class)與實體(Instance)"></a>類別(Class)與實體(Instance)</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lakers</span> <span class="comment">#類別</span></span></span><br><span class="line">  def <span class="keyword">self</span>.all <span class="comment">#類別方法</span></span><br><span class="line">    puts <span class="string">&quot;defense!&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">shoot</span><span class="params">(shots)</span></span> <span class="comment">#實體方法</span></span><br><span class="line">    puts <span class="string">&quot;nails a <span class="subst">#&#123;shots&#125;</span>!&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Lakers.all <span class="comment">#呼叫類別方法</span></span><br><span class="line"></span><br><span class="line">KCP = Lakers.new <span class="comment">#Lakers_player為類別，KCP為實體</span></span><br><span class="line">KCP.shoot <span class="string">&quot;three-pointer&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#類別方法印出 defense!</span></span><br><span class="line"><span class="comment">#實體方法印出 nails a three-pointer!!</span></span><br></pre></td></tr></table></figure>
+<h2 id="類別有繼承特性"><a href="#類別有繼承特性" class="headerlink" title="類別有繼承特性"></a>類別有繼承特性</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(foods)</span></span></span><br><span class="line">    puts <span class="string">&quot;<span class="subst">#&#123;foods&#125;</span> 超好吃！&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> &lt; Animal <span class="comment">#繼承Animal，也可說是分類在Animal下面</span></span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Amy = Cat.new</span><br><span class="line">Amy.eat <span class="string">&quot;小魚乾&quot;</span> <span class="comment">#印出小魚乾 超好吃！</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> &lt; Animal <span class="comment">#繼承Animal，也可說是分類在Animal下面</span></span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Ryan = Dog.new</span><br><span class="line">Ryan.eat <span class="string">&quot;潔牙骨&quot;</span> <span class="comment">#印出潔牙骨 超好吃！</span></span><br></pre></td></tr></table></figure>
+<h2 id="物件初始化"><a href="#物件初始化" class="headerlink" title="物件初始化"></a>物件初始化</h2><p>實體會先吃到初始化的指令</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lakers_player</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    puts <span class="string">&quot;let&#x27;s go Lakers!&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">shoot</span><span class="params">(shots)</span></span></span><br><span class="line">    puts <span class="string">&quot;makes a <span class="subst">#&#123;shots&#125;</span>!&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Davis = Lakers_player.new</span><br><span class="line">Davis.shoot <span class="string">&quot;10 foot jumpshot&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 印出let&#x27;s go Lakers!</span></span><br><span class="line"><span class="comment"># makes a 10 foot jumpshot!</span></span><br></pre></td></tr></table></figure>
+<h2 id="實體變數-Instance-Variable"><a href="#實體變數-Instance-Variable" class="headerlink" title="實體變數(Instance Variable)"></a>實體變數(Instance Variable)</h2><p>寫法為 <code>@</code> 開頭的變數，可在實體中裡自由取用，而且每個實體之間互不相影響。在使用 new 方法製作實體的時候，也可以順便傳參數進去。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lakers</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(name, position)</span></span></span><br><span class="line">    <span class="variable">@name</span> = name</span><br><span class="line">    <span class="variable">@position</span> = position</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">introduction</span></span></span><br><span class="line">    puts <span class="string">&quot;Hi, my name is <span class="subst">#&#123;<span class="variable">@name</span>&#125;</span>, I play <span class="subst">#&#123;<span class="variable">@position</span>&#125;</span>.&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">Lebron = Lakers.new(<span class="string">&quot;Lebron&quot;</span>, <span class="string">&quot;Small Forward&quot;</span>)</span><br><span class="line">Lebron.introduction</span><br><span class="line"></span><br><span class="line"><span class="comment">#印出 Hi, my name is Lebron, I play Small Forward.</span></span><br></pre></td></tr></table></figure>
+<h2 id="取用實體變數的方法："><a href="#取用實體變數的方法：" class="headerlink" title="取用實體變數的方法："></a>取用實體變數的方法：</h2><p>Ruby 的實體變數沒辦法直接從外部取用，否則會發生錯誤訊息：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Lebron = Lakers.new(<span class="string">&quot;Lebron&quot;</span>, <span class="string">&quot;Small Forward&quot;</span>)</span><br><span class="line">Lebron.position = <span class="string">&quot;Center&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">#undefined method `position=&#x27; for #&lt;Lakers:0x00005648e0e018c8&gt; (NoMethodError)</span></span><br></pre></td></tr></table></figure>
+<p>必須要將”.position=”這個方法先定義進去，才能取用</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lakers</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(position)</span></span></span><br><span class="line">    <span class="variable">@position</span> = position</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">position</span> </span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable">@position</span> <span class="comment">#return可省略，會回傳<span class="doctag">@position</span>，這三行稱之getter</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">position=</span><span class="params">(new_position)</span></span> <span class="comment">#會設定我們下的參數，稱之setter</span></span><br><span class="line">    <span class="variable">@position</span> = new_position</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Lebron = Lakers.new(<span class="string">&quot;Small Forward&quot;</span>)</span><br><span class="line">Lebron.position = <span class="string">&quot;Center&quot;</span> <span class="comment">#原始寫法為 position=(&quot;Center&quot;)，“position=”是一個方法，後面的center是參數</span></span><br><span class="line">puts Lebron.position</span><br><span class="line"></span><br><span class="line"><span class="comment">#印出Center</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Ruby 有幫我們定義了三個方法來解決這件事，分別是 attr_reader、attr_writer 以及 attr_accessor。這三個方法分別會做出「讀取」、「設定」以及「讀取 + 設定」的方法，所以原來的有點囉嗦的寫法就可使用 attr_accessor 改寫成這樣：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lakers</span></span></span><br><span class="line">  <span class="keyword">attr_accessor</span> <span class="symbol">:position</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(name, position)</span></span></span><br><span class="line">    <span class="variable">@name</span> = name</span><br><span class="line">    <span class="variable">@position</span> = position</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">introduction</span></span></span><br><span class="line">    puts <span class="string">&quot;Hi, my name is <span class="subst">#&#123;<span class="variable">@name</span>&#125;</span>, I play <span class="subst">#&#123;<span class="variable">@position</span>&#125;</span>.&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Lebron = Lakers.new(<span class="string">&quot;Lebron&quot;</span>, <span class="string">&quot;Small Forward&quot;</span>)</span><br><span class="line">Lebron.position = <span class="string">&quot;Center&quot;</span> </span><br><span class="line">puts Lebron.introduction</span><br><span class="line"></span><br><span class="line"><span class="comment">#印出Hi, my name is Lebron, I play Center.</span></span><br></pre></td></tr></table></figure>
+<h2 id="類別變數-Class-Variable"><a href="#類別變數-Class-Variable" class="headerlink" title="類別變數(Class Variable)"></a>類別變數(Class Variable)</h2><p>隨著類別活著</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span></span></span><br><span class="line">  <span class="variable">@@count</span> = <span class="number">0</span> <span class="comment">#類別變數</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    <span class="variable">@@count</span> += <span class="number">1</span> <span class="comment">#x += y =&gt; x = x + y</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  def <span class="keyword">self</span>.counter <span class="comment">#類別方法</span></span><br><span class="line">    <span class="keyword">return</span> @@count</span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="number">5</span>.times &#123; Dog.new &#125;</span><br><span class="line">p Dog.counter</span><br><span class="line"></span><br><span class="line"><span class="comment">#印出5</span></span><br></pre></td></tr></table></figure>
+<h2 id="開放類別-Open-Class"><a href="#開放類別-Open-Class" class="headerlink" title="開放類別(Open Class)"></a>開放類別(Open Class)</h2><p>如果同時出現多個相同名字的類別，在ruby的世界裡面，並不會由後面的覆蓋掉前面的，而是相互融合。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lakers</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hi</span></span></span><br><span class="line">    puts <span class="string">&quot;hi&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lakers</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">yo</span></span></span><br><span class="line">    puts <span class="string">&quot;yo&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Lebron = Lakers.new</span><br><span class="line">Lebron.yo <span class="comment">#印出yo</span></span><br><span class="line">Lebron.hi <span class="comment">#印出hi</span></span><br></pre></td></tr></table></figure>
+<p>ruby甚至可以改原本預設的類別，如string, integer..等</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Integer</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">+</span><span class="params">(n)</span></span></span><br><span class="line">    <span class="number">100</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">p <span class="number">1</span> + <span class="number">2</span> <span class="comment">#原始寫法是1物件呼叫+方法帶入2這個參數 p 1.+(2)，印出100</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">say_hi</span></span></span><br><span class="line">    puts <span class="string">&quot;hello <span class="subst">#&#123;<span class="keyword">self</span>&#125;</span>!&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">puts <span class="string">&quot;Phil&quot;</span>.say_hi <span class="comment">#印出 hello Phil!</span></span><br></pre></td></tr></table></figure>
+<h2 id="方法的存取控制"><a href="#方法的存取控制" class="headerlink" title="方法的存取控制"></a>方法的存取控制</h2><p>類別的方法存取限制常見的主要有三種：public、protected 以及 private。</p>
+<ul>
+<li>public: 一般沒有特別註明就是public，所有的人都可以直接存取。</li>
+<li>private: 在類別內部才可以存取。</li>
+<li>protected(非常少用): 差不多是在這兩者之間，比 private 寬鬆一些，但又沒有 public 那麼自在，protected 在同一個類別內或是同一個 package，或是繼承它的子類別可以自由取用，但如果不是的話則不可存取。</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span></span></span><br><span class="line">  def walk <span class="comment">#public</span></span><br><span class="line">    puts <span class="string">&quot;一天一萬步 醫生遠離我&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  private</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">eat</span></span></span><br><span class="line">    puts <span class="string">&quot;yumyum&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  protected</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">sleep</span></span></span><br><span class="line">    puts <span class="string">&quot;Zzz&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Phil = Human.new</span><br><span class="line">Phil.walk <span class="comment">#印出一天一萬步 醫生遠離我</span></span><br><span class="line">Phil.eat <span class="comment">#NoMethodError</span></span><br><span class="line">Phil.sleep <span class="comment">#NoMethodError</span></span><br></pre></td></tr></table></figure>
+<p>Phil.eat這段code，在ruby的世界裡，指的是發送了eat這個訊息(message)給Phil這個接收者(receiver)，而Private用法的規定，就是不能有接收者，也就是前面不能有小數點符號。</p>
+<p>也有一些方法可以繞過這個規定，只要把eat這個方法當作參數傳回去即可從外部呼叫這個方法：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Phil.send (<span class="symbol">:eat</span>) <span class="comment">#印出yumyum</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#可動態執行方法</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -198,7 +283,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/" class="post-title-link" itemprop="url">使用Action_text編輯器上傳圖檔到_AWS_S3</a>
+            <a href="/2021/01/29/%E4%BD%BF%E7%94%A8Action-text%E7%B7%A8%E8%BC%AF%E5%99%A8%E4%B8%8A%E5%82%B3%E5%9C%96%E6%AA%94%E5%88%B0-AWS-S3/" class="post-title-link" itemprop="url">將Action_text編輯器的圖檔上傳到_AWS_S3</a>
         </h2>
 
         <div class="post-meta">
@@ -207,10 +292,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-01-29 16:57:09 / Modified: 17:05:12" itemprop="dateCreated datePublished" datetime="2021-01-29T16:57:09+08:00">2021-01-29</time>
+              <time title="Created: 2021-01-29 16:57:09" itemprop="dateCreated datePublished" datetime="2021-01-29T16:57:09+08:00">2021-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-30 10:09:05" itemprop="dateModified" datetime="2021-01-30T10:09:05+08:00">2021-01-30</time>
+              </span>
 
           
 
@@ -915,80 +1006,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/03/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day5/" class="post-title-link" itemprop="url">codewar-取小於number的數字中，可以被3以及5整除的數字的總和</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-03 19:22:31" itemprop="dateCreated datePublished" datetime="2021-01-03T19:22:31+08:00">2021-01-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-22 23:36:42" itemprop="dateModified" datetime="2021-01-22T23:36:42+08:00">2021-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。"><a href="#題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。" class="headerlink" title="題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。"></a>題目：取小於number的數字中，可以被3以及5整除的數字的總和，如果是3跟5的公倍數，則只取一次。</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(actual, expected)</span></span></span><br><span class="line">  Test.assert_equals(actual, expected)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Test.describe(<span class="string">&quot;example tests&quot;</span>) <span class="keyword">do</span></span><br><span class="line">  test(solution(<span class="number">10</span>), <span class="number">23</span>)</span><br><span class="line">  test(solution(<span class="number">20</span>), <span class="number">78</span>)</span><br><span class="line">  test(solution(<span class="number">200</span>), <span class="number">9168</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><ol>
-<li><p>先把1-number的數字抓出來變成一個陣列</p>
-<p>(註：後來發現其實可以用1…number只取小於的數字，不包含最大值)</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(number)</span></span></span><br><span class="line">  (<span class="number">1</span>..number - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
-<li><p>要對每個元素做選取的動作，所以可以用select，然後取可以整除3或5的數字出來</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(number)</span></span></span><br><span class="line">  (<span class="number">1</span>..number - <span class="number">1</span>).select &#123; <span class="params">|x|</span> x % <span class="number">3</span> == <span class="number">0</span> <span class="params">||</span> x % <span class="number">5</span> == <span class="number">0</span> &#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
-<li><p>最後再用sum相加得到最後結果</p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1058,7 +1075,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
