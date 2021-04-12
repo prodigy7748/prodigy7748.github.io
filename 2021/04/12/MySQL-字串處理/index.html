@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"phillee.cc","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="sample table-employee123456789101112| id | first_name | last_name | title                  | salary | hire_date  | notes |+----+------------+-----------+------------------------+--------+------------+">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL_字串處理">
+<meta property="og:url" content="https://phillee.cc/2021/04/12/MySQL-%E5%AD%97%E4%B8%B2%E8%99%95%E7%90%86/index.html">
+<meta property="og:site_name" content="Phil&#39;s blog">
+<meta property="og:description" content="sample table-employee123456789101112| id | first_name | last_name | title                  | salary | hire_date  | notes |+----+------------+-----------+------------------------+--------+------------+">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-04-12T06:17:20.000Z">
+<meta property="article:modified_time" content="2021-04-12T06:17:44.019Z">
+<meta property="article:author" content="Phil lee">
+<meta property="article:tag" content="SQL">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://phillee.cc/2021/04/12/MySQL-%E5%AD%97%E4%B8%B2%E8%99%95%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>MySQL_字串處理 | Phil's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Phil's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/04/12/MySQL-%E5%AD%97%E4%B8%B2%E8%99%95%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL_字串處理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-12 14:17:20 / Modified: 14:17:44" itemprop="dateCreated datePublished" datetime="2021-04-12T14:17:20+08:00">2021-04-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="sample-table-employee"><a href="#sample-table-employee" class="headerlink" title="sample table-employee"></a>sample table-employee</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">| id | first_name | last_name | title                  | salary | hire_date  | notes |</span><br><span class="line">+----+------------+-----------+------------------------+--------+------------+-------+</span><br><span class="line">|  1 | Robin      | Jackman   | Software Engineer      |   5500 | 2001-10-12 | NULL  |</span><br><span class="line">|  2 | Taylor     | Edward    | Software Architect     |   7200 | 2002-09-21 | NULL  |</span><br><span class="line">|  3 | Vivian     | Dickens   | Database Administrator |   6000 | 2012-08-29 | NULL  |</span><br><span class="line">|  4 | Harry      | Clifford  | Database Administrator |   6800 | 2015-12-10 | NULL  |</span><br><span class="line">|  5 | Eliza      | Clifford  | Software Engineer      |   4750 | 1998-10-19 | NULL  |</span><br><span class="line">|  6 | Nancy      | Newman    | Software Engineer      |   5100 | 2007-01-23 | NULL  |</span><br><span class="line">|  7 | Melinda    | Clifford  | Project Manager        |   8500 | 2013-10-29 | NULL  |</span><br><span class="line">|  8 | Jack       | Chan      | Test Engineer          |   6500 | 2018-09-07 | NULL  |</span><br><span class="line">|  9 | Harley     | Gilbert   | Software Architect     |   8000 | 2000-07-17 | NULL  |</span><br><span class="line">+----+------------+-----------+------------------------+--------+---------------------</span><br></pre></td></tr></table></figure>
+<h3 id="字串拼接"><a href="#字串拼接" class="headerlink" title="字串拼接"></a>字串拼接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">CONCAT</span><br><span class="line">$ select CONCAT(first_name, &quot;, &quot;, last_name) as full_name from employee;</span><br><span class="line">+-------------------+</span><br><span class="line">| full_name         |</span><br><span class="line">+-------------------+</span><br><span class="line">| Robin, Jackman    |</span><br><span class="line">| Taylor, Edward    |</span><br><span class="line">| Vivian, Dickens   |</span><br><span class="line">| Harry, Clifford   |</span><br><span class="line">| Eliza, Clifford   |</span><br><span class="line">| Nancy, Newman     |</span><br><span class="line">| Melinda, Clifford |</span><br><span class="line">| Jack, Chan        |</span><br><span class="line">| Harley, Gilbert   |</span><br><span class="line">+-------------------+</span><br><span class="line"></span><br><span class="line">CONCAT_WS</span><br><span class="line">$ select CONCAT_WS(&quot;-&quot;, first_name, last_name, title) as employee_title fro</span><br><span class="line">m employee;</span><br><span class="line">+---------------------------------------+</span><br><span class="line">| employee_title                        |</span><br><span class="line">+---------------------------------------+</span><br><span class="line">| Robin-Jackman-Software Engineer       |</span><br><span class="line">| Taylor-Edward-Software Architect      |</span><br><span class="line">| Vivian-Dickens-Database Administrator |</span><br><span class="line">| Harry-Clifford-Database Administrator |</span><br><span class="line">| Eliza-Clifford-Software Engineer      |</span><br><span class="line">| Nancy-Newman-Software Engineer        |</span><br><span class="line">| Melinda-Clifford-Project Manager      |</span><br><span class="line">| Jack-Chan-Test Engineer               |</span><br><span class="line">| Harley-Gilbert-Software Architect     |</span><br><span class="line">+---------------------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="取某些字元"><a href="#取某些字元" class="headerlink" title="取某些字元"></a>取某些字元</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">substring(column, 起始字元排序, 結束字元排序)</span><br><span class="line">$ select CONCAT(first_name, &quot; &quot;, last_name,  &quot; was hired on &quot;, substring(hire_date, 1, 4)) as info from employee;</span><br><span class="line">+------------------------------------+</span><br><span class="line">| info                               |</span><br><span class="line">+------------------------------------+</span><br><span class="line">| Robin Jackman was hired on 2001    |</span><br><span class="line">| Taylor Edward was hired on 2002    |</span><br><span class="line">| Vivian Dickens was hired on 2012   |</span><br><span class="line">| Harry Clifford was hired on 2015   |</span><br><span class="line">| Eliza Clifford was hired on 1998   |</span><br><span class="line">| Nancy Newman was hired on 2007     |</span><br><span class="line">| Melinda Clifford was hired on 2013 |</span><br><span class="line">| Jack Chan was hired on 2018        |</span><br><span class="line">| Harley Gilbert was hired on 2000   |</span><br><span class="line">+------------------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="替換某些字元"><a href="#替換某些字元" class="headerlink" title="替換某些字元"></a>替換某些字元</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">REPLACE(column, 欲替換的字元， 替換上的字元)</span><br><span class="line">把software改成hardware</span><br><span class="line">$ select CONCAT(first_name, &quot; &quot;, last_name) as full_name, REPLACE(title, &quot;Soft&quot;, &quot;Hard&quot;) as new_title from employee;</span><br><span class="line">+------------------+------------------------+</span><br><span class="line">| full_name        | new_title              |</span><br><span class="line">+------------------+------------------------+</span><br><span class="line">| Robin Jackman    | Hardware Engineer      |</span><br><span class="line">| Taylor Edward    | Hardware Architect     |</span><br><span class="line">| Vivian Dickens   | Database Administrator |</span><br><span class="line">| Harry Clifford   | Database Administrator |</span><br><span class="line">| Eliza Clifford   | Hardware Engineer      |</span><br><span class="line">| Nancy Newman     | Hardware Engineer      |</span><br><span class="line">| Melinda Clifford | Project Manager        |</span><br><span class="line">| Jack Chan        | Test Engineer          |</span><br><span class="line">| Harley Gilbert   | Hardware Architect     |</span><br><span class="line">+------------------+------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="反轉字串"><a href="#反轉字串" class="headerlink" title="反轉字串"></a>反轉字串</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ select CONCAT(first_name, &quot; &quot;, last_name) as full_name, REVERSE(title) as</span><br><span class="line">new_title from employee;</span><br><span class="line"></span><br><span class="line">+------------------+------------------------+</span><br><span class="line">| full_name        | new_title              |</span><br><span class="line">+------------------+------------------------+</span><br><span class="line">| Robin Jackman    | reenignE erawtfoS      |</span><br><span class="line">| Taylor Edward    | tcetihcrA erawtfoS     |</span><br><span class="line">| Vivian Dickens   | rotartsinimdA esabataD |</span><br><span class="line">| Harry Clifford   | rotartsinimdA esabataD |</span><br><span class="line">| Eliza Clifford   | reenignE erawtfoS      |</span><br><span class="line">| Nancy Newman     | reenignE erawtfoS      |</span><br><span class="line">| Melinda Clifford | reganaM tcejorP        |</span><br><span class="line">| Jack Chan        | reenignE tseT          |</span><br><span class="line">| Harley Gilbert   | tcetihcrA erawtfoS     |</span><br><span class="line">+------------------+------------------------+</span><br></pre></td></tr></table></figure>
+<h3 id="字串長度"><a href="#字串長度" class="headerlink" title="字串長度"></a>字串長度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ select char_length(CONCAT(first_name, last_name)) as fullname_length from</span><br><span class="line">employee;</span><br><span class="line">+-----------------+</span><br><span class="line">| fullname_length |</span><br><span class="line">+-----------------+</span><br><span class="line">|              12 |</span><br><span class="line">|              12 |</span><br><span class="line">|              13 |</span><br><span class="line">|              13 |</span><br><span class="line">|              13 |</span><br><span class="line">|              11 |</span><br><span class="line">|              15 |</span><br><span class="line">|               8 |</span><br><span class="line">|              13 |</span><br><span class="line">+-----------------+</span><br></pre></td></tr></table></figure>
+<h3 id="改字串大小寫"><a href="#改字串大小寫" class="headerlink" title="改字串大小寫"></a>改字串大小寫</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ select UPPER(first_name) as first_name from employee;</span><br><span class="line">+------------+</span><br><span class="line">| first_name |</span><br><span class="line">+------------+</span><br><span class="line">| ROBIN      |</span><br><span class="line">| TAYLOR     |</span><br><span class="line">| VIVIAN     |</span><br><span class="line">| HARRY      |</span><br><span class="line">| ELIZA      |</span><br><span class="line">| NANCY      |</span><br><span class="line">| MELINDA    |</span><br><span class="line">| JACK       |</span><br><span class="line">| HARLEY     |</span><br><span class="line">+------------+</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SQL/" rel="tag"># SQL</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/12/MySQL-%E5%AE%89%E8%A3%9D%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4/" rel="prev" title="MySQL-安裝及基本指令">
+      <i class="fa fa-chevron-left"></i> MySQL-安裝及基本指令
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#sample-table-employee"><span class="nav-number">1.</span> <span class="nav-text">sample table-employee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E4%B8%B2%E6%8B%BC%E6%8E%A5"><span class="nav-number">2.</span> <span class="nav-text">字串拼接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%96%E6%9F%90%E4%BA%9B%E5%AD%97%E5%85%83"><span class="nav-number">3.</span> <span class="nav-text">取某些字元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8F%9B%E6%9F%90%E4%BA%9B%E5%AD%97%E5%85%83"><span class="nav-number">4.</span> <span class="nav-text">替換某些字元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E8%BD%89%E5%AD%97%E4%B8%B2"><span class="nav-number">5.</span> <span class="nav-text">反轉字串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E4%B8%B2%E9%95%B7%E5%BA%A6"><span class="nav-number">6.</span> <span class="nav-text">字串長度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E5%AD%97%E4%B8%B2%E5%A4%A7%E5%B0%8F%E5%AF%AB"><span class="nav-number">7.</span> <span class="nav-text">改字串大小寫</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Phil lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/prodigy7748" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;prodigy7748" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-baby"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Powered by Phil</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
