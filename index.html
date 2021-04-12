@@ -184,6 +184,76 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/04/12/MySQL-%E5%AE%89%E8%A3%9D%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/12/MySQL-%E5%AE%89%E8%A3%9D%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4/" class="post-title-link" itemprop="url">MySQL-安裝及基本指令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-12 14:10:53 / Modified: 14:11:47" itemprop="dateCreated datePublished" datetime="2021-04-12T14:10:53+08:00">2021-04-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="安裝MySQL"><a href="#安裝MySQL" class="headerlink" title="安裝MySQL"></a>安裝MySQL</h3><p>因為我是Mac，所以選擇MySQL Community Server下載。</p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/">https://dev.mysql.com/downloads/</a></p>
+<p>安裝完成之後會出現一個彈跳視窗，給你一個暫時的密碼，後面可以再修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A temporary password is generated for root@localhost: wj4U#ds.fQvM</span><br></pre></td></tr></table></figure>
+<h3 id="啟動mysql"><a href="#啟動mysql" class="headerlink" title="啟動mysql"></a>啟動mysql</h3><p>到我們mysql的安裝位置啟動。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd usr&#x2F;local&#x2F;mysql&#x2F;bin</span><br><span class="line">$ .&#x2F;mysql -u root -p</span><br></pre></td></tr></table></figure>
+<h3 id="修改密碼"><a href="#修改密碼" class="headerlink" title="修改密碼"></a>修改密碼</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ALTER USER &quot;root&quot;@&quot;localhost&quot; IDENTIFIED by &quot;new_password&quot;;</span><br><span class="line">$ exit;</span><br></pre></td></tr></table></figure>
+<h3 id="安裝Docker"><a href="#安裝Docker" class="headerlink" title="安裝Docker"></a>安裝Docker</h3><p>可參考此影片：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=f9jBaXbv4nA&list=PLfQqWeOCIH4BfWvgffq2-pIm9Mc8pf_OI&index=2">https://www.youtube.com/watch?v=f9jBaXbv4nA&amp;list=PLfQqWeOCIH4BfWvgffq2-pIm9Mc8pf_OI&amp;index=2</a></p>
+<h3 id="在docker上執行mysql"><a href="#在docker上執行mysql" class="headerlink" title="在docker上執行mysql"></a>在docker上執行mysql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;hub.docker.com&#x2F;_&#x2F;mysql</span><br><span class="line">$ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD&#x3D;my-secret-pw -d mysql:(mysql_version)</span><br><span class="line">$ docker ps (see all running containers )</span><br><span class="line">$ docker exec -it (container_name or its ID) sh(enter container shell)</span><br><span class="line">$ mysql -u root -p (use this caontainer&#39;s password)</span><br><span class="line"></span><br><span class="line">$ docker stop (container_name or its ID)</span><br><span class="line">$ docker ps -a (can see all containers been closed)</span><br><span class="line">$ docker rm (container_name or its ID)</span><br><span class="line"></span><br><span class="line">掛載資料檔</span><br><span class="line">1.將欲使用的資料檔路徑掛載進container(如果已經掛載過就可以省略此步驟)</span><br><span class="line">$ docker run --name some-mysql -v &#x2F;Users&#x2F;phil&#x2F;Downloads:&#x2F;root -e MYSQL_ROOT_PASSWORD&#x3D;root  -d mysql:5.7</span><br><span class="line"></span><br><span class="line">2.用source指令導入檔案</span><br><span class="line">$ source &#x2F;root&#x2F;file_name</span><br></pre></td></tr></table></figure>
+<h3 id="Database-command"><a href="#Database-command" class="headerlink" title="Database command"></a>Database command</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ create database (database_name);</span><br><span class="line">$ show databases; (see all databases we have now)</span><br><span class="line">$ use (database_name); (switch to another database)</span><br><span class="line">$ select (database_name); (see which database we are using)</span><br><span class="line">$ drop (database_name); (remove database)</span><br></pre></td></tr></table></figure>
+<h3 id="Table-command"><a href="#Table-command" class="headerlink" title="Table command"></a>Table command</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ create table table_name( column type, column type....);</span><br><span class="line">$ create table if not exists table_name( column type, column type....);</span><br><span class="line"></span><br><span class="line">$ show tables; (see all tables we have)</span><br><span class="line">$ describe table_name; (see all contents of the table)</span><br><span class="line">$ show columns from table_name; (same result as $ describe table_name)</span><br><span class="line">$ drop table table_name; (remove the table)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Practice-create-an-employee-table"><a href="#Practice-create-an-employee-table" class="headerlink" title="Practice (create an employee table)"></a>Practice (create an employee table)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ create table employees(</span><br><span class="line">  id INT AUTO_INCREMENT,</span><br><span class="line">  birth_date DATE,</span><br><span class="line">  gender ENUM(&quot;F&quot;,&quot;M&quot;),</span><br><span class="line">  first_name VARCHAR(20) NOT NULL,</span><br><span class="line">  last_name VARCHAR(20) NOT NULL,</span><br><span class="line">  hire_date DATE),</span><br><span class="line">	PRIMARY_KEY(id);</span><br><span class="line">	）</span><br></pre></td></tr></table></figure>
+<h3 id="Data-Insert-command"><a href="#Data-Insert-command" class="headerlink" title="Data Insert command"></a>Data Insert command</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into table_name(column1_name, column2_name,...) values (column1_value, cloumn2_value,...)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/02/03/SQL%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95-%E6%9F%A5%E8%A9%A2%E3%80%81%E6%9B%B4%E6%96%B0%E3%80%81%E5%88%AA%E9%99%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -964,72 +1034,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2021/01/05/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Phil lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phil's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/05/%E6%8C%91%E6%88%B0%E9%80%A3%E7%BA%8C%E5%88%B7codewar30%E5%A4%A9-day7/" class="post-title-link" itemprop="url">codewar-找到陣列中只有一個的數字</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-05 23:02:55" itemprop="dateCreated datePublished" datetime="2021-01-05T23:02:55+08:00">2021-01-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-22 23:36:04" itemprop="dateModified" datetime="2021-01-22T23:36:04+08:00">2021-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="題目：找到陣列中只有一個的數字"><a href="#題目：找到陣列中只有一個的數字" class="headerlink" title="題目：找到陣列中只有一個的數字"></a>題目：找到陣列中只有一個的數字</h3><h3 id="Example"><a href="#Example" class="headerlink" title="Example:"></a>Example:</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>] ==&gt; <span class="number">2</span></span><br><span class="line">[<span class="number">17</span>, <span class="number">17</span>, <span class="number">3</span>, <span class="number">17</span>, <span class="number">17</span>, <span class="number">17</span>, <span class="number">17</span>] ==&gt; <span class="number">3</span></span><br></pre></td></tr></table></figure>
-<h3 id="解題方向："><a href="#解題方向：" class="headerlink" title="解題方向："></a>解題方向：</h3><p>看到要對陣列裡的元素做事情時，都會先想到each, map, select這幾個api，這邊可以用each搭配count去算每個元素的數量，如果等於1代表只有一個，就回傳這個值。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stray</span> <span class="params">(numbers)</span></span></span><br><span class="line">  numbers.each &#123; <span class="params">|x|</span> <span class="keyword">return</span> x <span class="keyword">if</span> numbers.count(x) == <span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1099,14 +1103,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
