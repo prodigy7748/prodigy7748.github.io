@@ -184,6 +184,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://phillee.cc/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Phil lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phil's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/22/gem-devise-%E5%A6%82%E4%BD%95%E7%95%A5%E9%81%8E%E7%B7%A8%E8%BC%AFuser%E8%B3%87%E6%96%99%E6%99%82%EF%BC%8C%E5%BF%85%E9%A0%88%E6%8F%90%E4%BE%9B%E5%AF%86%E7%A2%BC%E7%9A%84%E6%AD%A5%E9%A9%9F%EF%BC%9F/" class="post-title-link" itemprop="url">gem-devise-如何略過編輯user資料時，必須提供密碼的步驟？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-22 22:22:32" itemprop="dateCreated datePublished" datetime="2020-12-22T22:22:32+08:00">2020-12-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-05 22:08:43" itemprop="dateModified" datetime="2021-01-05T22:08:43+08:00">2021-01-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p>因為devise預設都是吃Devise controller(如Devise::RegistrationsController)，所以如果要更改設定，必須先建立另一個controller蓋過原始設定。</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers [scope]</span><br><span class="line"><span class="comment">#這邊的scope我使用users</span></span><br></pre></td></tr></table></figure>
+<p> devise會幫你建立八個controller，如果不想那麼多，可以用以下指令替代</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>rails generate <span class="symbol">devise:</span>controllers users -c=sessions</span><br><span class="line"><span class="comment">#只建立sessions這個controller</span></span><br></pre></td></tr></table></figure></li>
+<li><p>到routes.rb這邊放入這段code，告訴router使用我們建立的controller</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">devise_for <span class="symbol">:users</span>, <span class="symbol">controllers:</span> &#123; <span class="symbol">registrations:</span> <span class="string">&#x27;registrations&#x27;</span> &#125;</span><br><span class="line"><span class="comment"># 其他controller如需要也可比照辦理</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在registration.controller底下，放入這段code</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_resource</span><span class="params">(resource, params)</span></span></span><br><span class="line">    resource.update_without_password(params)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在application_controller.rb裡面，放入這段code，讓我們新建的欄位，可以被params抓到並傳送</p>
+ <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">configure_permitted_parameters</span></span></span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:sign_up</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">    devise_parameter_sanitizer.permit(<span class="symbol">:account_update</span>, <span class="symbol">keys:</span> [<span class="symbol">:name</span>])</span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>如此一來，就可以在不需要輸入密碼的情況下更改資料。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="https://phillee.cc/2020/12/20/gem-devise-%E5%A6%82%E4%BD%95%E5%9C%A8%E8%A8%BB%E5%86%8A%E5%8F%8A%E6%9B%B4%E6%96%B0user%E8%B3%87%E6%96%99%E6%99%82%E5%A6%82%E6%9E%9C%E5%A2%9E%E5%8A%A0%E6%AC%84%E4%BD%8D%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -729,7 +807,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
